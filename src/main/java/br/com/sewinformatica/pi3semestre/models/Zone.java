@@ -18,4 +18,9 @@ public class Zone {
     private String name;
     @Column(nullable = false )
     private String description;
+
+    public Zone(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
