@@ -22,15 +22,15 @@ public class Movement {
     @ManyToOne
     private Responsible responsible;
 
-    @NotNull
+    @Column( nullable = false )
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIn;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOut;
 
-    @NotNull
+    @Column( nullable = false )
     private String status;
-    @NotNull
+    @Column( nullable = false )
     private Integer quantity;
     private String Obs;
 }

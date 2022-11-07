@@ -17,11 +17,11 @@ public class Equipment {
     @ManyToOne
     private Type type;
 
-    @NotNull
+    @Column( nullable = false )
     private String name;
-    @NotNull
+    @Column( nullable = false )
     private String description;
     private String unitOfMeasurement;
-    @NotNull
+    @Column( nullable = false )
     private String SAPCode;
 }
