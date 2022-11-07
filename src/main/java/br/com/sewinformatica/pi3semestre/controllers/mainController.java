@@ -1,4 +1,4 @@
-package br.com.sewinformatica.pi3semestre.controller;
+package br.com.sewinformatica.pi3semestre.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
