@@ -24,4 +24,12 @@ public class Equipment {
     private String unitOfMeasurement;
     @Column( nullable = false )
     private String SAPCode;
+
+    public Equipment(Type type, String name, String description, String unitOfMeasurement, String SAPCode) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.unitOfMeasurement = unitOfMeasurement;
+        this.SAPCode = SAPCode;
+    }
 }

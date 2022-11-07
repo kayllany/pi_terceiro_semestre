@@ -32,5 +32,15 @@ public class Movement {
     private String status;
     @Column( nullable = false )
     private Integer quantity;
-    private String Obs;
+    private String obs;
+
+    public Movement(Equipment equipment, Zone zone, Responsible responsible, Date dateIn, String status, Integer quantity, String obs) {
+        this.equipment = equipment;
+        this.zone = zone;
+        this.responsible = responsible;
+        this.dateIn = dateIn;
+        this.status = status;
+        this.quantity = quantity;
+        this.obs = obs;
+    }
 }

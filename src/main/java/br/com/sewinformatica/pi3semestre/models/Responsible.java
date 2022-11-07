@@ -24,4 +24,12 @@ public class Responsible {
     private String role;
     @Column(nullable = false )
     private String sector;
+
+    public Responsible(String user, String password, String name, String role, String sector) {
+        this.user = user;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+        this.sector = sector;
+    }
 }

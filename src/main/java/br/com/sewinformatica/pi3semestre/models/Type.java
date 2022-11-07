@@ -16,4 +16,8 @@ public class Type {
 
     @Column(nullable = false )
     private String name;
+
+    public Type(String name) {
+        this.name = name;
+    }
 }
