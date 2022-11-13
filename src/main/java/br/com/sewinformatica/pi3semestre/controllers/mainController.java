@@ -9,7 +9,7 @@ public class mainController {
 
     @GetMapping("/")
     public ModelAndView main() {
-        ModelAndView mv = new ModelAndView("main");
+        ModelAndView mv = new ModelAndView("login");
 
         return mv;
     }
