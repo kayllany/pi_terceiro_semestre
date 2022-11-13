@@ -33,6 +33,7 @@ public class Movimentacao {
     private Integer quantidade;
     private String obs;
 
+    public Movimentacao(){};
     public Movimentacao(Equipamento equipamento, Zona zona, Responsavel responsavel, Date dataEntrada, String status, Integer quantidade, String obs) {
         this.equipamento = equipamento;
         this.zona = zona;

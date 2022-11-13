@@ -16,6 +16,7 @@ public class Tipo {
     @Column(nullable = false )
     private String nome;
 
+    public Tipo(){};
     public Tipo(String nome) {
         this.nome = nome;
     }

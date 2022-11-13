@@ -24,6 +24,7 @@ public class Equipamento {
     @Column( nullable = false )
     private String codigoSAP;
 
+    public Equipamento(){};
     public Equipamento(Tipo tipo, String nome, String descricao, String unidadeDeMedida, String codigoSAP) {
         this.tipo = tipo;
         this.nome = nome;

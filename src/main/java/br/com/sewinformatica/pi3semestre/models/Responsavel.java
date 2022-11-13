@@ -24,6 +24,7 @@ public class Responsavel {
     @Column(nullable = false )
     private String setor;
 
+    public Responsavel(){};
     public Responsavel(String usuario, String senha, String nome, String cargo, String setor) {
         this.usuario = usuario;
         this.senha = senha;
