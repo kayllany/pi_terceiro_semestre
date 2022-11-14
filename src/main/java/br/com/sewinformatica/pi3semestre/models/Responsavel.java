@@ -20,16 +20,13 @@ public class Responsavel {
     @Column(nullable = false )
     private String nome;
     @Column(nullable = false )
-    private String cargo;
-    @Column(nullable = false )
     private String setor;
 
     public Responsavel(){};
-    public Responsavel(String usuario, String senha, String nome, String cargo, String setor) {
+    public Responsavel(String usuario, String senha, String nome, String setor) {
         this.usuario = usuario;
         this.senha = senha;
         this.nome = nome;
-        this.cargo = cargo;
         this.setor = setor;
     }
 }
