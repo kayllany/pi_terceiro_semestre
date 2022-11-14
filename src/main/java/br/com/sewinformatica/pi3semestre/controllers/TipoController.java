@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class mainController {
+public class TipoController {
 
-    @GetMapping("/")
-    public ModelAndView main() {
-        ModelAndView mv = new ModelAndView("login");
+    @GetMapping ("/tipos")
+    public ModelAndView tipos() {
+        ModelAndView mv = new ModelAndView("tipos");
 
         return mv;
     }

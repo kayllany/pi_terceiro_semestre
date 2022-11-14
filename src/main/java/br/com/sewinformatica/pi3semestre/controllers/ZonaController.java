@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class mainController {
+public class ZonaController {
 
-    @GetMapping("/")
-    public ModelAndView main() {
-        ModelAndView mv = new ModelAndView("login");
+    @GetMapping("/zonas")
+    public ModelAndView zonas() {
+        ModelAndView mv = new ModelAndView("zonas");
 
         return mv;
     }

@@ -1,6 +1,5 @@
 package br.com.sewinformatica.pi3semestre.models;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,37 +9,38 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class Movement {
+public class Movimentacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Integer id;
 
     @ManyToOne
-    private Equipment equipment;
+    private Equipamento equipamento;
     @ManyToOne
-    private Zone zone;
+    private Zona zona;
     @ManyToOne
-    private Responsible responsible;
+    private Responsavel responsavel;
 
     @Column( nullable = false )
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateIn;
+    private Date dataEntrada;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOut;
+    private Date dataSaida;
 
     @Column( nullable = false )
     private String status;
     @Column( nullable = false )
-    private Integer quantity;
+    private Integer quantidade;
     private String obs;
 
-    public Movement(Equipment equipment, Zone zone, Responsible responsible, Date dateIn, String status, Integer quantity, String obs) {
-        this.equipment = equipment;
-        this.zone = zone;
-        this.responsible = responsible;
-        this.dateIn = dateIn;
+    public Movimentacao(){};
+    public Movimentacao(Equipamento equipamento, Zona zona, Responsavel responsavel, Date dataEntrada, String status, Integer quantidade, String obs) {
+        this.equipamento = equipamento;
+        this.zona = zona;
+        this.responsavel = responsavel;
+        this.dataEntrada = dataEntrada;
         this.status = status;
-        this.quantity = quantity;
+        this.quantidade = quantidade;
         this.obs = obs;
     }
 }
