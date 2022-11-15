@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +24,9 @@ public class Equipamento {
     private String unidadeDeMedida;
     @Column( nullable = false )
     private String codigoSAP;
+
+    @OneToMany(mappedBy = "equipamento")
+    private List<Movimentacao> movimentacoes;
 
     public Equipamento(){};
     public Equipamento(Tipo tipo, String nome, String descricao, String unidadeDeMedida, String codigoSAP) {

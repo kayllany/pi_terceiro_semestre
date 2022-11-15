@@ -22,13 +22,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="equipamento : ${equipamentos}">
+                <tr th:each="equipamento : ${equipamentos}" class="d-flex">
+                    <div class="w-100">
                     <th th:text="${equipamento.id}">id</th>
                     <th th:text="${equipamento.codigoSAP}">codigo SAP</th>
                     <td th:text="${equipamento.nome}">nome</td>
                     <td th:text="${equipamento.descricao}">descrição</td>
                     <td th:text="${equipamento.unidadeDeMedida}">unidade de medida</td>
                     <td><a th:href="@{/equipamentos/{equipamentoId}/delete(equipamentoId = ${equipamento.id})}">Deletar</a></td>
+                    </div>
+
+                    <div th:each="movimentacao : ${equipamento.movimentacoes}" class="w-100">
+                        <th th:text="${movimentacao.id}">id</th>
+                        <th th:text="${movimentacao.dataEntrada}">codigo SAP</th>
+                        <td th:text="${movimentacao.dataSaida}">nome</td>
+                        <td th:text="${movimentacao.obs}">descrição</td>
+                        <td th:text="${movimentacao.quantidade}">unidade de medida</td>
+                        <td th:text="${movimentacao.status}"></td>
+                        <td th:text="${movimentacao.equipamento.nome}"></td>
+                        <td th:text="${movimentacao.responsavel.nome}"></td>
+                        <td th:text="${movimentacao.zona.nome}"></td>
+                        <td><a th:href="@{/movimentacoes/{movimentacaoId}/delete(movimentacaoId = ${movimentacao.id})}">Deletar</a></td>
+                    </div>
                 </tr>
                 </tbody>
             </table>
@@ -69,9 +84,10 @@
             </table>
         </div>
 
-        <div class="row mt-5">
-            <form class="border p-5 rounded rounded-3" action="equipamentos/create" method="post">
-                <h1>Equipamento</h1>
+        <div class="row mt-5 d-flex justify-content-center">
+            <form class="border p-5 rounded rounded-3 mt-5" action="equipamentos/create" method="post">
+                <h1>Novo Equipamento</h1>
+
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome">
@@ -92,6 +108,45 @@
                     <label for="codigoSAP">Codigo SAP</label>
                     <input name="codigoSAP" type="text" class="form-control" id="codigoSAP" placeholder="Codigo SAP">
                 </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            <form class="border p-5 rounded rounded-3 ml-5 mt-5" action="movimentacoes/create" method="post">
+                <h1>Nova Movimentacao</h1>
+
+                <div class="form-group">
+                    <label for="equipamento">Equipamento</label>
+                    <input name="equipamento" type="text" class="form-control" id="equipamento" placeholder="equipamento">
+                </div>
+                <div class="form-group">
+                    <label for="zona">Zona</label>
+                    <input name="zona" type="text" class="form-control" id="zona" placeholder="zona">
+                </div>
+                <div class="form-group">
+                    <label for="responsavel">Responsavel</label>
+                    <select name="responsavel" id="responsavel">
+                        <option th:each="responsavel : ${responsaveis}"  th:value="${responsavel.id}" th:text="${responsavel.nome}"></option>
+                    </select>
+                </div>
+                <!--<div class="form-group">
+                    <label for="dataEntrada">Data Entrada</label>
+                    <input name="dataEntrada" type="datetime-local" class="form-control" id="dataEntrada" placeholder="dataEntrada">
+                </div>-->
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status">
+                        <option th:each="status : ${movimentacaoStatus}"  th:value="${status}" th:text="${status}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantidade">Quantidade</label>
+                    <input name="quantidade" type="number" class="form-control" id="quantidade" placeholder="quantidade">
+                </div>
+                <div class="form-group">
+                    <label for="obs">Obs</label>
+                    <textarea name="obs" class="form-control" id="obs" placeholder="obs"></textarea>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

@@ -1,6 +1,6 @@
 package br.com.sewinformatica.pi3semestre.enums;
 
-public enum Prioridade {
+public enum PrioridadesEnum {
     BAIXA,
     MEDIA,
     ALTA

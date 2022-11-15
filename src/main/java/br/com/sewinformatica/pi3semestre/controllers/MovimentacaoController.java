@@ -1,16 +1,31 @@
 package br.com.sewinformatica.pi3semestre.controllers;
 
+import br.com.sewinformatica.pi3semestre.DTO.MovimentacaoDTO;
+import br.com.sewinformatica.pi3semestre.models.Movimentacao;
 import br.com.sewinformatica.pi3semestre.repositories.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Date;
 
 @Controller
 public class MovimentacaoController {
 
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
+
+    @PostMapping("/movimentacoes/create")
+    public String create(MovimentacaoDTO movimentacaoDTO) {
+        movimentacaoDTO.setDataEntrada(new Date());
+
+        Movimentacao movimentacao = movimentacaoDTO.toMovimentacao();
+        this.movimentacaoRepository.save(movimentacao);
+
+        return "redirect:/equipamentos";
+    }
 
     @GetMapping("movimentacoes/{id}/delete")
     public String delete(@PathVariable Integer id) {
