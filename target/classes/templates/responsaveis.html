@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <div class="row mt-5">
-        <h1>Equipamentos</h1>
+        <h1>Responsaveis</h1>
     </div>
     <div class="row mt-5 border rounded">
         <table class="table">
@@ -24,10 +24,10 @@
             <tbody>
             <tr th:each="responsavel : ${responsaveis}">
                 <th th:text="${responsavel.id}"></th>
-                <th th:text="${responsavel.nome}"></th>
-                <th th:text="${responsavel.senha}"></th>
-                <th th:text="${responsavel.setor}"></th>
-                <th th:text="${responsavel.usuario}"></th>
+                <td th:text="${responsavel.nome}"></td>
+                <td th:text="${responsavel.senha}"></td>
+                <td th:text="${responsavel.setor}"></td>
+                <td th:text="${responsavel.usuario}"></td>
             </tr>
             </tbody>
         </table>
