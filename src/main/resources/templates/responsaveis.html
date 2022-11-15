@@ -28,6 +28,7 @@
                 <td th:text="${responsavel.senha}"></td>
                 <td th:text="${responsavel.setor}"></td>
                 <td th:text="${responsavel.usuario}"></td>
+                <td><a th:href="@{/responsaveis/{responsavelId}/delete(responsavelId = ${responsavel.id})}">Deletar</a></td>
             </tr>
             </tbody>
         </table>
