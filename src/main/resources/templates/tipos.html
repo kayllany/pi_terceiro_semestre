@@ -22,6 +22,7 @@
             <tr th:each="tipo : ${tipos}">
                 <th th:text="${tipo.id}"></th>
                 <td th:text="${tipo.nome}"></td>
+                <td><a th:href="@{/tipos/{tipoId}/delete(tipoId = ${tipo.id})}">Deletar</a></td>
             </tr>
             </tbody>
         </table>
