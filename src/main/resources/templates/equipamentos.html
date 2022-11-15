@@ -28,6 +28,7 @@
                     <td th:text="${equipamento.nome}">nome</td>
                     <td th:text="${equipamento.descricao}">descrição</td>
                     <td th:text="${equipamento.unidadeDeMedida}">unidade de medida</td>
+                    <td><a th:href="@{/equipamentos/{equipamentoId}/delete(equipamentoId = ${equipamento.id})}">Deletar</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -62,6 +63,7 @@
                     <td th:text="${movimentacao.equipamento.nome}"></td>
                     <td th:text="${movimentacao.responsavel.nome}"></td>
                     <td th:text="${movimentacao.zona.nome}"></td>
+                    <td><a th:href="@{/movimentacoes/{movimentacaoId}/delete(movimentacaoId = ${movimentacao.id})}">Deletar</a></td>
                 </tr>
                 </tbody>
             </table>
