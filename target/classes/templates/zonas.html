@@ -24,6 +24,7 @@
                 <th th:text="${zona.id}"></th>
                 <td th:text="${zona.nome}"></td>
                 <td th:text="${zona.descricao}"></td>
+                <td><a th:href="@{/zonas/{zonaId}/delete(zonaId = ${zona.id})}">Deletar</a></td>
             </tr>
             </tbody>
         </table>
