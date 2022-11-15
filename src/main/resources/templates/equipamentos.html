@@ -10,7 +10,7 @@
         <div class="row mt-5">
             <h1>Equipamentos</h1>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-5 border rounded">
             <table class="table">
                 <thead>
                 <tr>
@@ -37,7 +37,7 @@
         <div class="row mt-5">
             <h1>Movimentação</h1>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-5 border rounded">
             <table class="table">
                 <thead>
                 <tr>
@@ -53,12 +53,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="equipamento : ${equipamentos}">
-                    <th th:text="${equipamento.id}">id</th>
-                    <th th:text="${equipamento.codigoSAP}">codigo SAP</th>
-                    <td th:text="${equipamento.nome}">nome</td>
-                    <td th:text="${equipamento.descricao}">descrição</td>
-                    <td th:text="${equipamento.unidadeDeMedida}">unidade de medida</td>
+                <tr th:each="movimentacao : ${movimentacoes}">
+                    <th th:text="${movimentacao.id}">id</th>
+                    <th th:text="${movimentacao.dataEntrada}">codigo SAP</th>
+                    <td th:text="${movimentacao.dataSaida}">nome</td>
+                    <td th:text="${movimentacao.obs}">descrição</td>
+                    <td th:text="${movimentacao.quantidade}">unidade de medida</td>
+                    <td th:text="${movimentacao.status}"></td>
+                    <td th:text="${movimentacao.equipamento.nome}"></td>
+                    <td th:text="${movimentacao.responsavel.nome}"></td>
+                    <td th:text="${movimentacao.zona.nome}"></td>
                 </tr>
                 </tbody>
             </table>

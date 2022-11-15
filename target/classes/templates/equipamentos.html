@@ -10,7 +10,7 @@
         <div class="row mt-5">
             <h1>Equipamentos</h1>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-5 border rounded">
             <table class="table">
                 <thead>
                 <tr>
@@ -32,6 +32,42 @@
                 </tbody>
             </table>
         </div>
+
+
+        <div class="row mt-5">
+            <h1>Movimentação</h1>
+        </div>
+        <div class="row mt-5 border rounded">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Data Entrada</th>
+                    <th scope="col">Data Saida</th>
+                    <th scope="col">Obs</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Equipamento Id</th>
+                    <th scope="col">Responsavel Id</th>
+                    <th scope="col">Zona Id</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="movimentacao : ${movimentacoes}">
+                    <th th:text="${movimentacao.id}">id</th>
+                    <th th:text="${movimentacao.dataEntrada}">codigo SAP</th>
+                    <td th:text="${movimentacao.dataSaida}">nome</td>
+                    <td th:text="${movimentacao.obs}">descrição</td>
+                    <td th:text="${movimentacao.quantidade}">unidade de medida</td>
+                    <td th:text="${movimentacao.status}"></td>
+                    <td th:text="${movimentacao.equipamento.nome}"></td>
+                    <td th:text="${movimentacao.responsavel.nome}"></td>
+                    <td th:text="${movimentacao.zona.nome}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="row mt-5">
             <form class="border p-5 rounded rounded-3" action="equipamentos/create" method="post">
                 <h1>Equipamento</h1>
