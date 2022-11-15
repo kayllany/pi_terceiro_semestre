@@ -40,5 +40,4 @@ public class EquipamentoController {
 
         return "redirect:/equipamentos";
     }
-
 }
