@@ -20,7 +20,7 @@ public class TipoController {
     public ModelAndView tipos() {
         List<Tipo> tipos = this.tipoRepository.findAll();
 
-        ModelAndView mv = new ModelAndView("tipos");
+        ModelAndView mv = new ModelAndView("tipo/listaTipo");
         mv.addObject("tipos", tipos);
 
         return mv;

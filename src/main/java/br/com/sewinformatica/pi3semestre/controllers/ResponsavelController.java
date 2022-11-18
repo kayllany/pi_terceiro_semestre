@@ -20,7 +20,7 @@ public class ResponsavelController {
     public ModelAndView responsaveis() {
         List<Responsavel> responsaveis = this.responsavelRepository.findAll();
 
-        ModelAndView mv = new ModelAndView("responsaveis");
+        ModelAndView mv = new ModelAndView("responsavel/listaResponsavel");
         mv.addObject("responsaveis", responsaveis);
 
         return mv;

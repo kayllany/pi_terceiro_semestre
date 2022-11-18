@@ -20,7 +20,7 @@ public class ZonaController {
     public ModelAndView zonas() {
         List<Zona> zonas = this.zonaRepository.findAll();
 
-        ModelAndView mv = new ModelAndView("zonas");
+        ModelAndView mv = new ModelAndView("zona/listaZona");
         mv.addObject("zonas", zonas);
 
         return mv;

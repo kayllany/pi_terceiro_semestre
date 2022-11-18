@@ -3,11 +3,12 @@ package br.com.sewinformatica.pi3semestre.controllers;
 import br.com.sewinformatica.pi3semestre.DTO.EquipamentoDTO;
 import br.com.sewinformatica.pi3semestre.enums.StatusEnum;
 import br.com.sewinformatica.pi3semestre.models.Equipamento;
-import br.com.sewinformatica.pi3semestre.models.Movimentacao;
 import br.com.sewinformatica.pi3semestre.models.Responsavel;
+import br.com.sewinformatica.pi3semestre.models.Zona;
 import br.com.sewinformatica.pi3semestre.repositories.EquipamentoRepository;
 import br.com.sewinformatica.pi3semestre.repositories.MovimentacaoRepository;
 import br.com.sewinformatica.pi3semestre.repositories.ResponsavelRepository;
+import br.com.sewinformatica.pi3semestre.repositories.ZonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class EquipamentoController {
@@ -26,18 +28,33 @@ public class EquipamentoController {
     private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private ResponsavelRepository responsavelRepository;
+    @Autowired
+    private ZonaRepository zonaRepository;
 
     @GetMapping("/equipamentos")
     public ModelAndView equipamentos() {
         List<Equipamento> equipamentos = this.equipamentoRepository.findAll();
-        List<Movimentacao> movimentacoes = this.movimentacaoRepository.findAll();
         List<Responsavel> responsaveis = this.responsavelRepository.findAll();
 
-        ModelAndView mv = new ModelAndView("equipamentos");
+        ModelAndView mv = new ModelAndView("equipamento/listaEquipamento");
         mv.addObject("equipamentos", equipamentos);
-        mv.addObject("movimentacoes", movimentacoes);
         mv.addObject("responsaveis", responsaveis);
+
+        return mv;
+    }
+
+    @GetMapping("equipamentos/{id}/view")
+    public ModelAndView view(@PathVariable Integer id) {
+        Optional<Equipamento> equipamento = this.equipamentoRepository.findById(id);
+        List<Responsavel> responsaveis = this.responsavelRepository.findAll();
+        List<Zona> zonas = this.zonaRepository.findAll();
+
+        ModelAndView mv = new ModelAndView("equipamento/detalhesEquipamento");
+        mv.addObject("responsaveis", responsaveis);
+        mv.addObject("equipamento", equipamento.get());
+        mv.addObject("zonas", zonas);
         mv.addObject("movimentacaoStatus", StatusEnum.values());
+
 
         return mv;
     }
