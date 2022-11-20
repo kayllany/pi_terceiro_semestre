@@ -4,13 +4,14 @@ import br.com.sewinformatica.pi3semestre.DTO.EquipamentoDTO;
 import br.com.sewinformatica.pi3semestre.enums.StatusEnum;
 import br.com.sewinformatica.pi3semestre.models.Equipamento;
 import br.com.sewinformatica.pi3semestre.models.Responsavel;
+import br.com.sewinformatica.pi3semestre.models.Tipo;
 import br.com.sewinformatica.pi3semestre.models.Zona;
-import br.com.sewinformatica.pi3semestre.repositories.EquipamentoRepository;
-import br.com.sewinformatica.pi3semestre.repositories.MovimentacaoRepository;
-import br.com.sewinformatica.pi3semestre.repositories.ResponsavelRepository;
-import br.com.sewinformatica.pi3semestre.repositories.ZonaRepository;
+import br.com.sewinformatica.pi3semestre.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,17 +31,17 @@ public class EquipamentoController {
     private ResponsavelRepository responsavelRepository;
     @Autowired
     private ZonaRepository zonaRepository;
+    @Autowired
+    private TipoRepository tipoRepository;
 
     @GetMapping("/equipamentos")
     public ModelAndView equipamentos() {
         List<Equipamento> equipamentos = this.equipamentoRepository.findAll();
-        List<Responsavel> responsaveis = this.responsavelRepository.findAll();
-        List<Zona> zonas = this.zonaRepository.findAll();
+        List<Tipo> tipos = this.tipoRepository.findAll();
 
         ModelAndView mv = new ModelAndView("equipamento/listaEquipamento");
         mv.addObject("equipamentos", equipamentos);
-        mv.addObject("responsaveis", responsaveis);
-        mv.addObject("zonas", zonas);
+        mv.addObject("tipos", tipos);
 
         return mv;
     }
@@ -60,12 +61,30 @@ public class EquipamentoController {
         return mv;
     }
 
-    @PostMapping("/equipamentos/create")
-    public String create(EquipamentoDTO equipamentoDTO) {
-        Equipamento equipamento = equipamentoDTO.toEquipamento();
-        this.equipamentoRepository.save(equipamento);
+    @GetMapping("equipamentos/new")
+    public ModelAndView newEquipamento() {
+        List<Tipo> tipos = this.tipoRepository.findAll();
 
-        return "redirect:/equipamentos";
+        ModelAndView mv = new ModelAndView("equipamento/novoEquipamento");
+        mv.addObject("tipos", tipos);
+        mv.addObject("movimentacaoStatus", StatusEnum.values());
+
+        return mv;
+    }
+
+    @PostMapping("/equipamentos/create")
+    public ModelAndView create(EquipamentoDTO equipamentoDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("\n******** TEM ERROS ***********\n");
+
+            return new ModelAndView("equipamentos/new");
+
+        } else {
+            Equipamento equipamento = equipamentoDTO.toEquipamento();
+            this.equipamentoRepository.save(equipamento);
+
+            return new ModelAndView("redirect:/equipamentos");
+        }
     }
 
     @GetMapping("equipamentos/{id}/delete")
@@ -73,5 +92,27 @@ public class EquipamentoController {
         this.equipamentoRepository.deleteById(id);
 
         return "redirect:/equipamentos";
+    }
+
+    @GetMapping("equipamentos/{id}/edit")
+    public ModelAndView edit(@PathVariable Integer id, EquipamentoDTO equipamentoDTO) {
+        Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Equipamento equipamento = optional.get();
+            equipamentoDTO.fromEquipamento(equipamento);
+            List<Tipo> tipos = this.tipoRepository.findAll();
+
+            ModelAndView mv = new ModelAndView("equipamento/editarEquipamento");
+            mv.addObject("equipamento", equipamentoDTO);
+            mv.addObject("tipos", tipos);
+
+            return mv;
+
+        } else {
+            System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
+
+            return new ModelAndView("redirect:/equipamentos");
+        }
     }
 }

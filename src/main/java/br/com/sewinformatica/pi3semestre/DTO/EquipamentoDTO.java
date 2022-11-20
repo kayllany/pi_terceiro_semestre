@@ -25,4 +25,12 @@ public class EquipamentoDTO {
                 codigoSAP = this.codigoSAP
         );
     }
+
+    public void fromEquipamento(Equipamento equipamento) {
+        this.tipo = equipamento.getTipo();
+        this.nome = equipamento.getNome();
+        this.descricao = equipamento.getDescricao();
+        this.unidadeDeMedida = equipamento.getUnidadeDeMedida();
+        this.codigoSAP = equipamento.getCodigoSAP();
+    }
 }
