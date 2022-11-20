@@ -11,6 +11,18 @@
         <h1>Detalhes</h1>
     </div>
     <div class="row mt-5">
+        <h1>#<span th:text="${equipamento.id}"></span> - <span th:text="${equipamento.nome}"></span></h1>
+    </div>
+    <ul class="mt-4">
+        <li><strong>Codigo SAP:</strong> <span th:text="${equipamento.codigoSAP}"></span></li>
+        <li><strong>Tipo:</strong> <span th:text="${equipamento.tipo.nome}"></span></li>
+        <li><strong>Descricao:</strong> <span th:text="${equipamento.descricao}"></span></li>
+        <li><strong>Unidade de Medida:</strong> <span th:text="${equipamento.unidadeDeMedida}"></span></li>
+    </ul>
+    <div class="row mt-5">
+        <h1>Historico</h1>
+    </div>
+    <div class="row mt-5">
         <table class="table border rounded">
             <thead>
             <tr>

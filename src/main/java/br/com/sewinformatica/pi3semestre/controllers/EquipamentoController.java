@@ -35,10 +35,12 @@ public class EquipamentoController {
     public ModelAndView equipamentos() {
         List<Equipamento> equipamentos = this.equipamentoRepository.findAll();
         List<Responsavel> responsaveis = this.responsavelRepository.findAll();
+        List<Zona> zonas = this.zonaRepository.findAll();
 
         ModelAndView mv = new ModelAndView("equipamento/listaEquipamento");
         mv.addObject("equipamentos", equipamentos);
         mv.addObject("responsaveis", responsaveis);
+        mv.addObject("zonas", zonas);
 
         return mv;
     }
@@ -54,7 +56,6 @@ public class EquipamentoController {
         mv.addObject("equipamento", equipamento.get());
         mv.addObject("zonas", zonas);
         mv.addObject("movimentacaoStatus", StatusEnum.values());
-
 
         return mv;
     }
