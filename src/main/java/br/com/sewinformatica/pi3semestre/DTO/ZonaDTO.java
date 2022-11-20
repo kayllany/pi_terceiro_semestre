@@ -19,4 +19,9 @@ public class ZonaDTO {
                 descricao = this.descricao
         );
     }
+
+    public void fromZona(Zona zona) {
+        this.nome = zona.getNome();
+        this.descricao = zona.getDescricao();
+    }
 }

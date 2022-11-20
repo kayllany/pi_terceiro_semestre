@@ -16,4 +16,8 @@ public class TipoDTO {
                 nome = this.nome
         );
     }
+
+    public void fromTipo(Tipo tipo) {
+        this.nome = tipo.getNome();
+    }
 }

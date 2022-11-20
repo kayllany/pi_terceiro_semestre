@@ -58,19 +58,19 @@
 
             <div class="form-group">
                 <label for="zona">Zona</label>
-                <select name="zona" id="zona">
+                <select class="form-control" name="zona" id="zona">
                     <option th:each="zona : ${zonas}"  th:value="${zona.id}" th:text="${zona.nome}"></option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="responsavel">Responsavel</label>
-                <select name="responsavel" id="responsavel">
+                <select class="form-control" name="responsavel" id="responsavel">
                     <option th:each="responsavel : ${responsaveis}"  th:value="${responsavel.id}" th:text="${responsavel.nome}"></option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
-                <select name="status" id="status">
+                <select class="form-control" name="status" id="status">
                     <option th:each="status : ${movimentacaoStatus}"  th:value="${status}" th:text="${status}"></option>
                 </select>
             </div>
