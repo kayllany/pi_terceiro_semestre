@@ -19,6 +19,7 @@
         <li><strong>Descricao:</strong> <span th:text="${equipamento.descricao}"></span></li>
         <li><strong>Unidade de Medida:</strong> <span th:text="${equipamento.unidadeDeMedida}"></span></li>
     </ul>
+    <a class="btn btn-primary mt-5" th:href="@{/equipamentos/{equipamentoId}/edit(equipamentoId = ${equipamento.id})}" role="button">Editar</a>
     <div class="row mt-5">
         <h1>Historico</h1>
     </div>
@@ -33,6 +34,7 @@
                 <th scope="col">Zona</th>
                 <th scope="col">Qtd</th>
                 <th scope="col">Obs</th>
+
             </tr>
             </thead>
             <tbody>

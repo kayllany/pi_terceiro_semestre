@@ -1,5 +1,6 @@
 package br.com.sewinformatica.pi3semestre.controllers;
 
+import br.com.sewinformatica.pi3semestre.DTO.EditarEquipamentoDTO;
 import br.com.sewinformatica.pi3semestre.DTO.EquipamentoDTO;
 import br.com.sewinformatica.pi3semestre.enums.StatusEnum;
 import br.com.sewinformatica.pi3semestre.models.Equipamento;
@@ -74,9 +75,7 @@ public class EquipamentoController {
 
     @PostMapping("/equipamentos/create")
     public ModelAndView create(EquipamentoDTO equipamentoDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            System.out.println("\n******** TEM ERROS ***********\n");
-
+        if (bindingResult.hasErrors()) { System.out.println("\n******** TEM ERROS ***********\n");
             return new ModelAndView("equipamentos/new");
 
         } else {
@@ -106,6 +105,7 @@ public class EquipamentoController {
             ModelAndView mv = new ModelAndView("equipamento/editarEquipamento");
             mv.addObject("equipamento", equipamentoDTO);
             mv.addObject("tipos", tipos);
+            mv.addObject("equipamentoId", equipamento.getId());
 
             return mv;
 
@@ -114,5 +114,23 @@ public class EquipamentoController {
 
             return new ModelAndView("redirect:/equipamentos");
         }
+    }
+
+    @PostMapping("equipamentos/update/{id}")
+    public ModelAndView update(@PathVariable Integer id, EditarEquipamentoDTO editarEquipamentoDTO) {
+
+            Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
+
+            if (optional.isPresent()) {
+                Equipamento equipamento = editarEquipamentoDTO.toEquipamento(optional.get());
+                this.equipamentoRepository.save(equipamento);
+
+                return new ModelAndView("redirect:/equipamentos/" + equipamento.getId() + "/view");
+
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
+
+                return new ModelAndView("redirect:/equipamentos");
+            }
     }
 }

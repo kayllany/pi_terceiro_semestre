@@ -26,9 +26,6 @@
       </div>
       <div class="form-group">
         <label for="tipo">Setor</label>
-        <!--
-        <input type="text" class="form-control" name="tipo" id="tipo">
-        -->
         <select class="form-control" name="setor" id="setor">
           <option th:each="setor : ${setores}"  th:value="${setor}" th:text="${setor}"></option>
         </select>
