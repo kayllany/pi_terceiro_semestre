@@ -28,6 +28,11 @@ public class TipoController {
         return mv;
     }
 
+    @GetMapping ("/tipos/new")
+    public ModelAndView newTipo() {
+        return new ModelAndView("tipo/novoTipo");
+    }
+
     @PostMapping("/tipos/create")
     public String create(TipoDTO tipoDTO) {
         Tipo tipo = tipoDTO.toTipo();

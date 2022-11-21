@@ -16,6 +16,7 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Nome</th>
+                <th scope="col" colspan="2">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -23,21 +24,12 @@
                 <th th:text="${tipo.id}"></th>
                 <td th:text="${tipo.nome}"></td>
                 <td><a th:href="@{/tipos/{tipoId}/delete(tipoId = ${tipo.id})}">Deletar</a></td>
+                <td><a th:href="@{/tipos/{tipoId}/edit(tipoId = ${tipo.id})}">editar</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div class="row mt-5 d-flex justify-content-center">
-        <form class="border p-5 rounded rounded-3 mt-5" action="tipos/create" method="post">
-            <h1>Novo Tipo</h1>
-
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+    <a class="btn btn-primary mt-5" href="/tipos/new" role="button">Novo</a>
 </div>
 </body>
 </html>
