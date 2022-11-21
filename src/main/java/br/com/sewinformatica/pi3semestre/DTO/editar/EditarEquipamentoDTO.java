@@ -1,4 +1,4 @@
-package br.com.sewinformatica.pi3semestre.DTO;
+package br.com.sewinformatica.pi3semestre.DTO.editar;
 
 import br.com.sewinformatica.pi3semestre.models.Equipamento;
 import br.com.sewinformatica.pi3semestre.models.Tipo;

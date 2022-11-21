@@ -1,6 +1,6 @@
 package br.com.sewinformatica.pi3semestre.controllers;
 
-import br.com.sewinformatica.pi3semestre.DTO.EditarEquipamentoDTO;
+import br.com.sewinformatica.pi3semestre.DTO.editar.EditarEquipamentoDTO;
 import br.com.sewinformatica.pi3semestre.DTO.EquipamentoDTO;
 import br.com.sewinformatica.pi3semestre.enums.StatusEnum;
 import br.com.sewinformatica.pi3semestre.models.Equipamento;
@@ -9,9 +9,7 @@ import br.com.sewinformatica.pi3semestre.models.Tipo;
 import br.com.sewinformatica.pi3semestre.models.Zona;
 import br.com.sewinformatica.pi3semestre.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,17 +47,23 @@ public class EquipamentoController {
 
     @GetMapping("equipamentos/{id}/view")
     public ModelAndView view(@PathVariable Integer id) {
-        Optional<Equipamento> equipamento = this.equipamentoRepository.findById(id);
-        List<Responsavel> responsaveis = this.responsavelRepository.findAll();
-        List<Zona> zonas = this.zonaRepository.findAll();
+        Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
 
-        ModelAndView mv = new ModelAndView("equipamento/detalhesEquipamento");
-        mv.addObject("responsaveis", responsaveis);
-        mv.addObject("equipamento", equipamento.get());
-        mv.addObject("zonas", zonas);
-        mv.addObject("movimentacaoStatus", StatusEnum.values());
+        if (optional.isPresent()) {
+            Equipamento equipamento = optional.get();
+            List<Responsavel> responsaveis = this.responsavelRepository.findAll();
+            List<Zona> zonas = this.zonaRepository.findAll();
 
-        return mv;
+            ModelAndView mv = new ModelAndView("equipamento/detalhesEquipamento");
+            mv.addObject("equipamento", equipamento);
+
+            return mv;
+
+        } else {
+            System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
+
+            return new ModelAndView("redirect:/equipamentos");
+        }
     }
 
     @GetMapping("equipamentos/new")

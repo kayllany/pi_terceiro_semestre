@@ -52,43 +52,10 @@
             </div>
             </tbody>
         </table>
+        <a class="btn btn-primary mt-5" th:href="@{/movimentacoes/{equipamentoId}/new(equipamentoId = ${equipamento.id})}" role="button">Movimentar</a>
     </div>
 
-    <div class="row mt-5 d-flex justify-content-center">
-        <form class="border p-5 rounded rounded-3 ml-5 mt-5" th:action="@{/movimentacoes/{equipamentoId}/create(equipamentoId = ${equipamento.id})}" method="post">
-            <h1>Nova Movimentacao</h1>
-
-            <div class="form-group">
-                <label for="zona">Zona</label>
-                <select class="form-control" name="zona" id="zona">
-                    <option th:each="zona : ${zonas}"  th:value="${zona.id}" th:text="${zona.nome}"></option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="responsavel">Responsavel</label>
-                <select class="form-control" name="responsavel" id="responsavel">
-                    <option th:each="responsavel : ${responsaveis}"  th:value="${responsavel.id}" th:text="${responsavel.nome}"></option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="status">Status</label>
-                <select class="form-control" name="status" id="status">
-                    <option th:each="status : ${movimentacaoStatus}"  th:value="${status}" th:text="${status}"></option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="quantidade">Quantidade</label>
-                <input name="quantidade" type="number" class="form-control" id="quantidade" placeholder="quantidade">
-            </div>
-            <div class="form-group">
-                <label for="obs">Obs</label>
-                <textarea name="obs" class="form-control" id="obs" placeholder="obs"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <a class="btn btn-primary" href="/equipamentos" role="button">Home</a>
+    <a class="btn btn-primary mt-5" href="/equipamentos" role="button">Home</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
