@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="row mt-5 d-flex justify-content-center">
-  <form th:object="${equipamentoDTO}" class="border p-5 rounded rounded-3 mt-5" th:action="@{/equipamentos/update/{equipamentoId}(equipamentoId = ${equipamentoId})}" method="post">
+  <form th:object="${equipamentoDTO}" class="border p-5 rounded rounded-3 mt-5" th:action="@{/equipamentos/{equipamentoId}/update(equipamentoId = ${equipamentoId})}" method="post">
     <h1>Editar Equipamento</h1>
 
     <div class="form-group">

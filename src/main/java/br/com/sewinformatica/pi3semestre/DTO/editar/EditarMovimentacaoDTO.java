@@ -1,4 +1,4 @@
-package br.com.sewinformatica.pi3semestre.DTO;
+package br.com.sewinformatica.pi3semestre.DTO.editar;
 
 import br.com.sewinformatica.pi3semestre.models.Equipamento;
 import br.com.sewinformatica.pi3semestre.models.Movimentacao;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class MovimentacaoDTO {
+public class EditarMovimentacaoDTO {
     private Equipamento equipamento;
     private Zona zona;
     private Responsavel responsavel;
@@ -33,6 +33,16 @@ public class MovimentacaoDTO {
                 quantidade = this.quantidade,
                 obs = this.obs
         );
+    }
+
+    public Movimentacao toMovimentacao(Movimentacao movimentacao) {
+        movimentacao.setZona(this.zona);
+        movimentacao.setResponsavel(this.responsavel);
+        movimentacao.setStatus(this.status);
+        movimentacao.setQuantidade(this.quantidade);
+        movimentacao.setObs(this.obs);
+
+        return movimentacao;
     }
 
     public void fromMovimentacao(Movimentacao movimentacao) {

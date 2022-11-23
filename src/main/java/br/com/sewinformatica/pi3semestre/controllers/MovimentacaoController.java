@@ -1,6 +1,7 @@
 package br.com.sewinformatica.pi3semestre.controllers;
 
 import br.com.sewinformatica.pi3semestre.DTO.MovimentacaoDTO;
+import br.com.sewinformatica.pi3semestre.DTO.editar.EditarMovimentacaoDTO;
 import br.com.sewinformatica.pi3semestre.enums.StatusEnum;
 import br.com.sewinformatica.pi3semestre.models.Movimentacao;
 import br.com.sewinformatica.pi3semestre.models.Responsavel;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MovimentacaoController {
@@ -62,5 +64,49 @@ public class MovimentacaoController {
         this.movimentacaoRepository.deleteById(id);
 
         return "redirect:/equipamentos/" + equipamentoId + "/view";
+    }
+
+    @GetMapping("movimentacoes/{id}/edit")
+    public ModelAndView edit(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO) {
+        Optional<Movimentacao> optional = this.movimentacaoRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Movimentacao movimentacao = optional.get();
+            editarMovimentacaoDTO.fromMovimentacao(movimentacao);
+            List<Responsavel> responsaveis = this.responsavelRepository.findAll();
+            List<Zona> zonas = this.zonaRepository.findAll();
+
+            ModelAndView mv = new ModelAndView("movimentacao/editarMovimentacao");
+            mv.addObject("movimentacao", editarMovimentacaoDTO);
+            mv.addObject("movimentacaoId", movimentacao.getId());
+            mv.addObject("responsaveis", responsaveis);
+            mv.addObject("zonas", zonas);
+            mv.addObject("movimentacaoStatus", StatusEnum.values());
+
+            return mv;
+
+        } else {
+            System.out.println("\n**************** NAO ENCONTRAMOS A MOVIMENTAÇÃO ****************\n");
+
+            return new ModelAndView("redirect:/equipamentos");
+        }
+    }
+
+    @PostMapping("movimentacoes/{id}/update")
+    public ModelAndView update(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO) {
+
+        Optional<Movimentacao> optional = this.movimentacaoRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Movimentacao movimentacao = editarMovimentacaoDTO.toMovimentacao(optional.get());
+            this.movimentacaoRepository.save(movimentacao);
+
+            return new ModelAndView("redirect:/equipamentos/" + movimentacao.getEquipamento().getId() + "/view");
+
+        } else {
+            System.out.println("\n**************** NAO ENCONTRAMOS A MOVIMENTAÇÃO ****************\n");
+
+            return new ModelAndView("redirect:/equipamentos");
+        }
     }
 }

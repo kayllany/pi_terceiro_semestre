@@ -120,7 +120,7 @@ public class EquipamentoController {
         }
     }
 
-    @PostMapping("equipamentos/update/{id}")
+    @PostMapping("equipamentos/{id}/update")
     public ModelAndView update(@PathVariable Integer id, EditarEquipamentoDTO editarEquipamentoDTO) {
 
             Optional<Equipamento> optional = this.equipamentoRepository.findById(id);

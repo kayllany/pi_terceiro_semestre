@@ -34,7 +34,7 @@
                 <th scope="col">Zona</th>
                 <th scope="col">Qtd</th>
                 <th scope="col">Obs</th>
-
+                <th scope="col" colspan="2">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -48,6 +48,7 @@
                     <td th:text="${movimentacao.quantidade}"></th>
                     <td th:text="${movimentacao.obs}"></th>
                     <td><a th:href="@{/movimentacoes/{movimentacaoId}/delete(movimentacaoId = ${movimentacao.id})}">Excluir</a></td>
+                    <td><a th:href="@{/movimentacoes/{movimentacaoId}/edit(movimentacaoId = ${movimentacao.id})}">Editar</a></td>
                 </tr>
             </div>
             </tbody>
