@@ -19,6 +19,7 @@
                 <th scope="col">Senha</th>
                 <th scope="col">Setor</th>
                 <th scope="col">Usuario</th>
+                <th scope="col" colspan="2">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -28,11 +29,14 @@
                 <td th:text="${responsavel.senha}"></td>
                 <td th:text="${responsavel.setor}"></td>
                 <td th:text="${responsavel.usuario}"></td>
-                <td><a th:href="@{/responsaveis/{responsavelId}/delete(responsavelId = ${responsavel.id})}">Deletar</a></td>
+                <td><a th:href="@{/responsaveis/{responsavelId}/delete(responsavelId = ${responsavel.id})}">Excluir</a></td>
+                <td><a th:href="@{/responsaveis/{responsavelId}/edit(responsavelId = ${responsavel.id})}">Editar</a></td>
             </tr>
             </tbody>
         </table>
     </div>
+    <a class="btn btn-primary mt-5" href="/responsaveis/new" role="button">Novo</a>
+    <a class="btn btn-primary mt-5" href="/equipamentos" role="button">home</a>
 </div>
 </body>
 </html>

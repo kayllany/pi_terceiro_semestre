@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ResponsavelController {
@@ -50,5 +51,26 @@ public class ResponsavelController {
         this.responsavelRepository.deleteById(id);
 
         return "redirect:/responsaveis";
+    }
+
+    @GetMapping("/responsaveis/{id}/edit")
+    public ModelAndView edit(@PathVariable Integer id, ResponsavelDTO responsavelDTO) {
+        Optional<Responsavel> optional = this.responsavelRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Responsavel responsavel = optional.get();
+            responsavelDTO.fromResponsavel(responsavel);
+
+            ModelAndView mv = new ModelAndView("responsavel/editarResponsavel");
+            mv.addObject("responsavel", responsavelDTO);
+            mv.addObject("setores", SetoresEnum.values());
+
+            return mv;
+
+        } else {
+            System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
+
+            return new ModelAndView("redirect:/responsaveis");
+        }
     }
 }
