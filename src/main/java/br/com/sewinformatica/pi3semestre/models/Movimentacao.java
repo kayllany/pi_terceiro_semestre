@@ -19,6 +19,7 @@ public class Movimentacao {
     @ManyToOne
     private Zona zona;
     @ManyToOne
+    @JoinColumn(name = "responsavel_id", nullable = false)
     private Responsavel responsavel;
 
     @Column( nullable = false )

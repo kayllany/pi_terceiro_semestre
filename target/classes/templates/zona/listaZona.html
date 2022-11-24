@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zonas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5">
+        <h1>Zonas</h1>
+    </div>
+    <div class="row mt-5 border rounded">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">nome</th>
+                <th scope="col">descrição</th>
+                <th scope="col" colspan="2">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="zona : ${zonas}">
+                <th th:text="${zona.id}"></th>
+                <td th:text="${zona.nome}"></td>
+                <td th:text="${zona.descricao}"></td>
+                <td><a th:href="@{/zonas/{zonaId}/delete(zonaId = ${zona.id})}">Deletar</a></td>
+                <td><a th:href="@{/zonas/{zonaId}/edit(zonaId = ${zona.id})}">Editar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="btn btn-primary mt-5" href="/zonas/new" role="button">Novo</a>
+    <a class="btn btn-primary mt-5" href="/equipamentos" role="button">home</a>
+</div>
+</body>
+</html>
