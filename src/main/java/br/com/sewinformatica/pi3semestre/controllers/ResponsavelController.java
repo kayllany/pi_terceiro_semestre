@@ -1,6 +1,8 @@
 package br.com.sewinformatica.pi3semestre.controllers;
 
 import br.com.sewinformatica.pi3semestre.DTO.ResponsavelDTO;
+import br.com.sewinformatica.pi3semestre.DTO.editar.EditarEquipamentoDTO;
+import br.com.sewinformatica.pi3semestre.DTO.editar.EditarResponsavelDTO;
 import br.com.sewinformatica.pi3semestre.enums.SetoresEnum;
 import br.com.sewinformatica.pi3semestre.models.Responsavel;
 import br.com.sewinformatica.pi3semestre.repositories.ResponsavelRepository;
@@ -64,8 +66,27 @@ public class ResponsavelController {
             ModelAndView mv = new ModelAndView("responsavel/editarResponsavel");
             mv.addObject("responsavel", responsavelDTO);
             mv.addObject("setores", SetoresEnum.values());
+            mv.addObject("responsavelId", responsavel.getId());
 
             return mv;
+
+        } else {
+            System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
+
+            return new ModelAndView("redirect:/responsaveis");
+        }
+    }
+
+    @PostMapping("responsaveis/{id}/update")
+    public ModelAndView update(@PathVariable Integer id, EditarResponsavelDTO editarResponsavelDTO) {
+
+        Optional<Responsavel> optional = this.responsavelRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Responsavel responsavel = editarResponsavelDTO.toResponsavel(optional.get());
+            this.responsavelRepository.save(responsavel);
+
+            return new ModelAndView("redirect:/responsaveis");
 
         } else {
             System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
