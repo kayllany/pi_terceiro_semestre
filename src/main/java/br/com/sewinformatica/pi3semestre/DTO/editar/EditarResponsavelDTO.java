@@ -27,7 +27,7 @@ public class EditarResponsavelDTO {
         responsavel.setUsuario(this.usuario);
         responsavel.setSenha(this.senha);
         responsavel.setNome(this.nome);
-        responsavel.setSenha(this.setor);
+        responsavel.setSetor(this.setor);
 
         return responsavel;
     }
