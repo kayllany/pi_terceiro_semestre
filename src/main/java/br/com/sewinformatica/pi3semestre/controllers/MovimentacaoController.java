@@ -10,6 +10,7 @@ import br.com.sewinformatica.pi3semestre.repositories.EquipamentoRepository;
 import br.com.sewinformatica.pi3semestre.repositories.MovimentacaoRepository;
 import br.com.sewinformatica.pi3semestre.repositories.ResponsavelRepository;
 import br.com.sewinformatica.pi3semestre.repositories.ZonaRepository;
+import br.com.sewinformatica.pi3semestre.service.ResponsavelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,80 +35,127 @@ public class MovimentacaoController {
     @Autowired
     private ZonaRepository zonaRepository;
 
-    @GetMapping("/movimentacoes/{equipamentoId}/new")
-    public ModelAndView newMovimentacao(@PathVariable Integer equipamentoId) {
-        List<Responsavel> responsaveis = this.responsavelRepository.findAll();
-        List<Zona> zonas = this.zonaRepository.findAll();
+    @Autowired
+    private ResponsavelService responsavelService;
 
-        ModelAndView mv = new ModelAndView("movimentacao/novoMovimentacao");
-        mv.addObject("responsaveis", responsaveis);
-        mv.addObject("zonas", zonas);
-        mv.addObject("movimentacaoStatus", StatusEnum.values());
-        mv.addObject("equipamentoId", equipamentoId);
+    @GetMapping("/movimentacoes/{equipamentoId}/new")
+    public ModelAndView newMovimentacao(@PathVariable Integer equipamentoId, HttpSession session) {
+
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioTemPermissao(session)) {
+            List<Zona> zonas = this.zonaRepository.findAll();
+
+            mv.setViewName("movimentacao/novoMovimentacao");
+            mv.addObject("zonas", zonas);
+            mv.addObject("movimentacaoStatus", StatusEnum.values());
+            mv.addObject("equipamentoId", equipamentoId);
+
+        } else {
+            mv.setViewName("erro/naoPermitido");
+        }
 
         return mv;
     }
 
     @PostMapping("/movimentacoes/{id}/create")
-    public String create(MovimentacaoDTO movimentacaoDTO, @PathVariable Integer id) {
-        movimentacaoDTO.setDataEntrada(new Date());
-        movimentacaoDTO.setEquipamento(equipamentoRepository.findById(id).get());
+    public ModelAndView create(MovimentacaoDTO movimentacaoDTO, @PathVariable Integer id, HttpSession session) {
 
-        Movimentacao movimentacao = movimentacaoDTO.toMovimentacao();
-        this.movimentacaoRepository.save(movimentacao);
+        ModelAndView mv = new ModelAndView();
 
-        return "redirect:/equipamentos/" + id + "/view";
+        if (responsavelService.usuarioTemPermissao(session)) {
+            Responsavel responsavel = (Responsavel) session.getAttribute("responsavelLogado");
+
+            movimentacaoDTO.setDataEntrada(new Date());
+            movimentacaoDTO.setResponsavel(responsavel);
+            movimentacaoDTO.setEquipamento(equipamentoRepository.findById(id).get());
+
+            Movimentacao movimentacao = movimentacaoDTO.toMovimentacao();
+            this.movimentacaoRepository.save(movimentacao);
+
+            mv.setViewName("redirect:/equipamentos/" + id + "/view");
+
+        } else {
+            mv.setViewName("erro/naoPermitido");
+        }
+
+        return mv;
     }
 
     @GetMapping("movimentacoes/{id}/delete")
-    public String delete(@PathVariable Integer id) {
-        Integer equipamentoId = this.movimentacaoRepository.findById(id).get().getEquipamento().getId();
-        this.movimentacaoRepository.deleteById(id);
+    public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
-        return "redirect:/equipamentos/" + equipamentoId + "/view";
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioTemPermissao(session)) {
+            Integer equipamentoId = this.movimentacaoRepository.findById(id).get().getEquipamento().getId();
+            this.movimentacaoRepository.deleteById(id);
+
+            mv.setViewName("redirect:/equipamentos/" + equipamentoId + "/view");
+
+        } else {
+            mv.setViewName("erro/naoPermitido");
+        }
+
+        return mv;
     }
 
     @GetMapping("movimentacoes/{id}/edit")
-    public ModelAndView edit(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO) {
-        Optional<Movimentacao> optional = this.movimentacaoRepository.findById(id);
+    public ModelAndView edit(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO, HttpSession session) {
 
-        if (optional.isPresent()) {
-            Movimentacao movimentacao = optional.get();
-            editarMovimentacaoDTO.fromMovimentacao(movimentacao);
-            List<Responsavel> responsaveis = this.responsavelRepository.findAll();
-            List<Zona> zonas = this.zonaRepository.findAll();
+        ModelAndView mv = new ModelAndView();
 
-            ModelAndView mv = new ModelAndView("movimentacao/editarMovimentacao");
-            mv.addObject("movimentacao", editarMovimentacaoDTO);
-            mv.addObject("movimentacaoId", movimentacao.getId());
-            mv.addObject("responsaveis", responsaveis);
-            mv.addObject("zonas", zonas);
-            mv.addObject("movimentacaoStatus", StatusEnum.values());
+        if (responsavelService.usuarioTemPermissao(session)) {
+            Optional<Movimentacao> optional = this.movimentacaoRepository.findById(id);
 
-            return mv;
+            if (optional.isPresent()) {
+                Movimentacao movimentacao = optional.get();
+                editarMovimentacaoDTO.fromMovimentacao(movimentacao);
+                List<Zona> zonas = this.zonaRepository.findAll();
 
+                mv.setViewName("movimentacao/editarMovimentacao");
+                mv.addObject("movimentacao", editarMovimentacaoDTO);
+                mv.addObject("movimentacaoId", movimentacao.getId());
+                mv.addObject("zonas", zonas);
+                mv.addObject("movimentacaoStatus", StatusEnum.values());
+
+                return mv;
+
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS A MOVIMENTAÇÃO ****************\n");
+
+                mv.setViewName("redirect:/equipamentos");
+            }
         } else {
-            System.out.println("\n**************** NAO ENCONTRAMOS A MOVIMENTAÇÃO ****************\n");
-
-            return new ModelAndView("redirect:/equipamentos");
+            mv.setViewName("erro/naoPermitido");
         }
+
+        return mv;
     }
 
     @PostMapping("movimentacoes/{id}/update")
-    public ModelAndView update(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO) {
+    public ModelAndView update(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO, HttpSession session) {
 
-        Optional<Movimentacao> optional = this.movimentacaoRepository.findById(id);
+        ModelAndView mv = new ModelAndView();
 
-        if (optional.isPresent()) {
-            Movimentacao movimentacao = editarMovimentacaoDTO.toMovimentacao(optional.get());
-            this.movimentacaoRepository.save(movimentacao);
+        if (responsavelService.usuarioTemPermissao(session)) {
+            Optional<Movimentacao> optional = this.movimentacaoRepository.findById(id);
 
-            return new ModelAndView("redirect:/equipamentos/" + movimentacao.getEquipamento().getId() + "/view");
+            if (optional.isPresent()) {
+                Responsavel responsavel = (Responsavel) session.getAttribute("responsavelLogado");
+                editarMovimentacaoDTO.setResponsavel(responsavel);
+                Movimentacao movimentacao = editarMovimentacaoDTO.toMovimentacao(optional.get());
+                this.movimentacaoRepository.save(movimentacao);
 
-        } else {
-            System.out.println("\n**************** NAO ENCONTRAMOS A MOVIMENTAÇÃO ****************\n");
+                mv.setViewName("redirect:/equipamentos/" + movimentacao.getEquipamento().getId() + "/view");
 
-            return new ModelAndView("redirect:/equipamentos");
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS A MOVIMENTAÇÃO ****************\n");
+
+                mv.setViewName("redirect:/equipamentos");
+            }
         }
+
+        return mv;
     }
 }
