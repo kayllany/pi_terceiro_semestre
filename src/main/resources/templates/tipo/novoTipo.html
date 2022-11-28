@@ -12,9 +12,9 @@
 <body>
     <div th:replace="global/fragments/topnav.html :: navbar"></div>
 
-    <div class="container">
-        <div class="row mt-5 d-flex justify-content-center">
-            <form class="border p-5 rounded rounded-3 mt-5" action="/tipos/create" method="post">
+    <div class="d-flex align-items-center justify-content-center" style="height: calc(100vh - 64px);">
+        <div class="row d-flex justify-content-center card px-5 pt-4 pb-4">
+            <form action="/tipos/create" method="post">
                 <h1>Novo Tipo</h1>
 
                 <div class="form-group">

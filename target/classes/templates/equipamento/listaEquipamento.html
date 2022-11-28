@@ -13,21 +13,21 @@
     <div th:replace="global/fragments/topnav.html :: navbar"></div>
 
     <div class="container">
-        <div class="row mt-5">
+        <div class="row my-3">
             <h1>Equipamentos</h1>
             <a title="Incluir responsável" class="btn d-flex align-items-center" href="/equipamentos/new" role="button">
                 <span class="material-symbols-outlined">add</span>
             </a>
         </div>
 
-        <div class="row mt-5">
+        <div class="row">
             <table class="table border rounded">
                 <thead>
                     <tr>
-                        <th scope="col">Cod.SAP</th>
+                        <th scope="col">Cod. SAP</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Tipo</th>
-                        <th scope="col">Descricao</th>
+                        <th scope="col">Descrição</th>
                         <th scope="col">Unidade de Medida</th>
                         <th scope="col" colspan="3">Ações</th>
                     </tr>
@@ -35,10 +35,9 @@
                 <tbody>
                     <div th:each="equipamento : ${equipamentos}">
                         <tr>
-                            <td th:text="${equipamento.id}">id</th>
                             <td th:text="${equipamento.codigoSAP}">codigo SAP</th>
                             <td th:text="${equipamento.nome}">nome</td>
-                            <!-- <td th:text="${equipamento.tipo.nome}">tipo</td> -->
+                            <td th:text="${equipamento.tipo.nome}">tipo</td>
                             <td th:text="${equipamento.descricao}">descrição</td>
                             <td th:text="${equipamento.unidadeDeMedida}">unidade de medida</td>
                             <td>

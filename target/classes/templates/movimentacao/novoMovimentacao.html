@@ -12,10 +12,9 @@
 <body>
   <div th:replace="global/fragments/topnav.html :: navbar"></div>
 
-  <div class="container">
-    <div class="row mt-5 d-flex justify-content-center">
-      <form class="border p-5 rounded rounded-3 ml-5 mt-5"
-        th:action="@{/movimentacoes/{equipamentoId}/create(equipamentoId = ${equipamentoId})}" method="post">
+  <div class="d-flex align-items-center justify-content-center" style="height: calc(100vh - 64px);">
+    <div class="row d-flex justify-content-center card px-5 pt-4 pb-4">
+      <form th:action="@{/movimentacoes/{equipamentoId}/create(equipamentoId = ${equipamentoId})}" method="post">
         <h1>Nova Movimentacao</h1>
 
         <div class="form-group">
@@ -25,7 +24,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="responsavel">Responsavel</label>
+          <label for="responsavel">Responsável</label>
           <select class="form-control" name="responsavel" id="responsavel">
             <option th:each="responsavel : ${responsaveis}" th:value="${responsavel.id}" th:text="${responsavel.nome}">
             </option>
