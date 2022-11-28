@@ -8,14 +8,18 @@ import br.com.sewinformatica.pi3semestre.models.Responsavel;
 import br.com.sewinformatica.pi3semestre.models.Tipo;
 import br.com.sewinformatica.pi3semestre.models.Zona;
 import br.com.sewinformatica.pi3semestre.repositories.*;
+import br.com.sewinformatica.pi3semestre.service.ResponsavelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,108 +37,167 @@ public class EquipamentoController {
     @Autowired
     private TipoRepository tipoRepository;
 
-    @GetMapping("/equipamentos")
-    public ModelAndView equipamentos() {
-        List<Equipamento> equipamentos = this.equipamentoRepository.findAll();
-        List<Tipo> tipos = this.tipoRepository.findAll();
+    @Autowired
+    private ResponsavelService responsavelService;
 
-        ModelAndView mv = new ModelAndView("equipamento/listaEquipamento");
-        mv.addObject("equipamentos", equipamentos);
-        mv.addObject("tipos", tipos);
+    @GetMapping("/equipamentos")
+    public ModelAndView equipamentos(HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioEstaLogado(session)){
+            List<Equipamento> equipamentos = this.equipamentoRepository.findAll();
+            List<Tipo> tipos = this.tipoRepository.findAll();
+
+            mv.setViewName("equipamento/listaEquipamento");
+            mv.addObject("equipamentos", equipamentos);
+            mv.addObject("tipos", tipos);
+
+        } else {
+            mv.setViewName("erro/naoLogado");
+        }
 
         return mv;
     }
 
     @GetMapping("equipamentos/{id}/view")
-    public ModelAndView view(@PathVariable Integer id) {
-        Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
+    public ModelAndView view(@PathVariable Integer id, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
 
-        if (optional.isPresent()) {
-            Equipamento equipamento = optional.get();
-            List<Responsavel> responsaveis = this.responsavelRepository.findAll();
-            List<Zona> zonas = this.zonaRepository.findAll();
+        if (responsavelService.usuarioEstaLogado(session)) {
+            Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
 
-            ModelAndView mv = new ModelAndView("equipamento/detalhesEquipamento");
-            mv.addObject("equipamento", equipamento);
+            if (optional.isPresent()) {
+                Equipamento equipamento = optional.get();
+                List<Responsavel> responsaveis = this.responsavelRepository.findAll();
+                List<Zona> zonas = this.zonaRepository.findAll();
 
-            return mv;
+                mv.setViewName("equipamento/detalhesEquipamento");
+                mv.addObject("equipamento", equipamento);
+
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
+
+                mv.setViewName("redirect:/equipamentos");
+            }
 
         } else {
-            System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
-
-            return new ModelAndView("redirect:/equipamentos");
+            mv.setViewName("erro/naoLogado");
         }
+        return mv;
     }
 
     @GetMapping("equipamentos/new")
-    public ModelAndView newEquipamento() {
-        List<Tipo> tipos = this.tipoRepository.findAll();
+    public ModelAndView newEquipamento(HttpSession session) {
 
-        ModelAndView mv = new ModelAndView("equipamento/novoEquipamento");
-        mv.addObject("tipos", tipos);
-        mv.addObject("movimentacaoStatus", StatusEnum.values());
+        ModelAndView mv = new ModelAndView();
 
+        if (responsavelService.usuarioEstaLogado(session)) {
+            List<Tipo> tipos = this.tipoRepository.findAll();
+
+            mv.setViewName("equipamento/novoEquipamento");
+            mv.addObject("tipos", tipos);
+            mv.addObject("movimentacaoStatus", StatusEnum.values());
+
+        } else {
+            mv.setViewName("erro/naoLogado");
+        }
         return mv;
     }
 
     @PostMapping("/equipamentos/create")
-    public ModelAndView create(EquipamentoDTO equipamentoDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) { System.out.println("\n******** TEM ERROS ***********\n");
-            return new ModelAndView("equipamentos/new");
+    public ModelAndView create(EquipamentoDTO equipamentoDTO, BindingResult bindingResult, HttpSession session) {
 
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioEstaLogado(session)) {
+            if (bindingResult.hasErrors()) {
+                System.out.println("\n******** TEM ERROS ***********\n");
+                mv.setViewName("equipamentos/new");
+
+            } else {
+                Equipamento equipamento = equipamentoDTO.toEquipamento();
+                this.equipamentoRepository.save(equipamento);
+
+                mv.setViewName("redirect:/equipamentos");
+            }
         } else {
-            Equipamento equipamento = equipamentoDTO.toEquipamento();
-            this.equipamentoRepository.save(equipamento);
-
-            return new ModelAndView("redirect:/equipamentos");
+            mv.setViewName("erro/naoLogado");
         }
+
+        return mv;
     }
 
     @GetMapping("equipamentos/{id}/delete")
-    public String delete(@PathVariable Integer id) {
-        this.equipamentoRepository.deleteById(id);
+    public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
-        return "redirect:/equipamentos";
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioTemPermissao(session)) {
+            this.equipamentoRepository.deleteById(id);
+
+            return equipamentos(session);
+
+        } else {
+            mv.setViewName("erro/naoPermitido");
+        }
+
+        return mv;
     }
 
     @GetMapping("equipamentos/{id}/edit")
-    public ModelAndView edit(@PathVariable Integer id, EquipamentoDTO equipamentoDTO) {
-        Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
+    public ModelAndView edit(@PathVariable Integer id, EquipamentoDTO equipamentoDTO, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
 
-        if (optional.isPresent()) {
-            Equipamento equipamento = optional.get();
-            equipamentoDTO.fromEquipamento(equipamento);
-            List<Tipo> tipos = this.tipoRepository.findAll();
+        if (responsavelService.usuarioEstaLogado(session)) {
+            Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
 
-            ModelAndView mv = new ModelAndView("equipamento/editarEquipamento");
-            mv.addObject("equipamento", equipamentoDTO);
-            mv.addObject("tipos", tipos);
-            mv.addObject("equipamentoId", equipamento.getId());
+            if (optional.isPresent()) {
+                Equipamento equipamento = optional.get();
+                equipamentoDTO.fromEquipamento(equipamento);
+                List<Tipo> tipos = this.tipoRepository.findAll();
 
-            return mv;
+                mv.setViewName("equipamento/editarEquipamento");
+                mv.addObject("equipamento", equipamentoDTO);
+                mv.addObject("tipos", tipos);
+                mv.addObject("equipamentoId", equipamento.getId());
+
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
+
+                mv.setViewName("redirect:/equipamentos");
+            }
 
         } else {
-            System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
-
-            return new ModelAndView("redirect:/equipamentos");
+            mv.setViewName("erro/naoLogado");
         }
+
+        return mv;
     }
 
     @PostMapping("equipamentos/{id}/update")
-    public ModelAndView update(@PathVariable Integer id, EditarEquipamentoDTO editarEquipamentoDTO) {
+    public ModelAndView update(@PathVariable Integer id, EditarEquipamentoDTO editarEquipamentoDTO, HttpSession session) {
 
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioEstaLogado(session)) {
             Optional<Equipamento> optional = this.equipamentoRepository.findById(id);
 
             if (optional.isPresent()) {
                 Equipamento equipamento = editarEquipamentoDTO.toEquipamento(optional.get());
                 this.equipamentoRepository.save(equipamento);
 
-                return new ModelAndView("redirect:/equipamentos/" + equipamento.getId() + "/view");
+                mv.setViewName("redirect:/equipamentos/" + equipamento.getId() + "/view");
 
             } else {
                 System.out.println("\n**************** NAO ENCONTRAMOS O EQUIPAMENTO ****************\n");
 
-                return new ModelAndView("redirect:/equipamentos");
+                mv.setViewName("redirect:/equipamentos");
             }
+
+        } else {
+            mv.setViewName("erro/naoLogado");
+        }
+
+        return mv;
     }
 }
