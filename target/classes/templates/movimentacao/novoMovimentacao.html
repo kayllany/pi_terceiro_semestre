@@ -9,25 +9,18 @@
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="bg-dark">
   <div th:replace="global/fragments/topnav.html :: navbar"></div>
 
-  <div class="d-flex align-items-center justify-content-center" style="height: calc(100vh - 64px);">
-    <div class="row d-flex justify-content-center card px-5 pt-4 pb-4">
+  <div class="d-flex align-items-center justify-content-center bg-dark" style="height: calc(100vh - 64px);">
+    <div class="row d-flex justify-content-center card px-5 pt-4 pb-4 shadow">
       <form th:action="@{/movimentacoes/{equipamentoId}/create(equipamentoId = ${equipamentoId})}" method="post">
-        <h1>Nova Movimentacao</h1>
+        <h1>Nova Movimentação</h1>
 
         <div class="form-group">
           <label for="zona">Zona</label>
           <select class="form-control" name="zona" id="zona">
             <option th:each="zona : ${zonas}" th:value="${zona.id}" th:text="${zona.nome}"></option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="responsavel">Responsável</label>
-          <select class="form-control" name="responsavel" id="responsavel">
-            <option th:each="responsavel : ${responsaveis}" th:value="${responsavel.id}" th:text="${responsavel.nome}">
-            </option>
           </select>
         </div>
         <div class="form-group">
