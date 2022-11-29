@@ -15,6 +15,11 @@ public class ResponsavelDTO {
     private String nome;
     private String setor;
 
+    /**
+     * Método para criar instância do responsável
+     * @author Matheus
+     * @return {@code Responsavel}
+     */
     public Responsavel toReponsavel() {
         return new Responsavel(
                 usuario = this.usuario,
@@ -24,6 +29,12 @@ public class ResponsavelDTO {
         );
     }
 
+    /**
+     * Método para passar as informações do objeto no DTO
+     * @author Matheus
+     * @param {@code Responsavel}
+     * @return void
+     */
     public void fromResponsavel(Responsavel responsavel) {
         this.usuario = responsavel.getUsuario();
         this.senha = responsavel.getSenha();

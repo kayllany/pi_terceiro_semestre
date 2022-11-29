@@ -20,6 +20,13 @@ public class ResponsavelService {
     @Autowired
     ResponsavelRepository responsavelRepository;
 
+    /**
+     * Método para salvar o responsável na base de dados
+     * @author Matheus
+     * @throws Exception
+     * @param {@code Responsavel}
+     * @return {@code void}
+     */
     public void salvarResponsavel(Responsavel responsavel) throws Exception {
 
         try {
@@ -36,6 +43,13 @@ public class ResponsavelService {
         responsavelRepository.save(responsavel);
     }
 
+    /**
+     * Método para atualizar o responsável na base de dados
+     * @author Matheus
+     * @throws Exception
+     * @param {@code Responsavel}
+     * @return {@code void}
+     */
     public void atualizarResponsavel(Responsavel responsavel) throws Exception {
 
         try {
@@ -48,17 +62,36 @@ public class ResponsavelService {
         responsavelRepository.save(responsavel);
     }
 
+    /**
+     * Método para fazer o login do responsável
+     * @author Matheus
+     * @throws ServiceExc
+     * @param {@code String} usuário, {@code String} senha
+     * @return {@code Responsavel}
+     */
     public Responsavel loginResponsavel(String usuario, String senha) throws ServiceExc {
 
         return responsavelRepository.buscarLogin(usuario, senha);
     }
 
+    /**
+     * Método para verificar se o usuário está logado
+     * @author Matheus
+     * @param {@code HttpSession}
+     * @return {@code Boolean}
+     */
     public Boolean usuarioEstaLogado(HttpSession session) {
         Responsavel responsavelLogado = (Responsavel) session.getAttribute("responsavelLogado");
 
         return responsavelLogado != null;
     }
 
+    /**
+     * Método para verificar se o tem permissão para acessar
+     * @author Matheus
+     * @param {@code HttpSession}
+     * @return {@code Boolean}
+     */
     public Boolean usuarioTemPermissao(HttpSession session) {
         Responsavel responsavelLogado = (Responsavel) session.getAttribute("responsavelLogado");
         Boolean estaLogado = this.usuarioEstaLogado(session);

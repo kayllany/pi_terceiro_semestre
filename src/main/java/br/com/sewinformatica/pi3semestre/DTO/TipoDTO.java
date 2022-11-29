@@ -17,6 +17,12 @@ public class TipoDTO {
         );
     }
 
+    /**
+     * Método para passar as informações do objeto no DTO
+     * @author Ryu
+     * @param {@code Tipo}
+     * @return void
+     */
     public void fromTipo(Tipo tipo) {
         this.nome = tipo.getNome();
     }

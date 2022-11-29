@@ -37,6 +37,11 @@ public class ResponsavelController {
     @Autowired
     private ResponsavelService responsavelService;
 
+    /**
+     * Método para listar todos os responsáveis
+     * @author Matheus
+     * @return {@code ModelAndView}
+     */
     @GetMapping("/responsaveis")
     public ModelAndView responsaveis() {
         List<Responsavel> responsaveis = this.responsavelRepository.findAll();
@@ -47,6 +52,12 @@ public class ResponsavelController {
         return mv;
     }
 
+    /**
+     * Método para acessar a página do formulário de criação
+     * @author Matheus
+     * @param {@code ResponsavelDTO}
+     * @return {@code ModelAndView}
+     */
     @GetMapping("/responsaveis/new")
     public ModelAndView newResponsavel(ResponsavelDTO responsavelDTO) {
         ModelAndView mv = new ModelAndView("responsavel/novoResponsavel");
@@ -55,6 +66,12 @@ public class ResponsavelController {
         return mv;
     }
 
+    /**
+     * Método para criar um responsável
+     * @author Matheus
+     * @param {@code ResponsavelDTO}
+     * @return {@code List<Responsavel>}
+     */
     @PostMapping("/responsaveis/create")
     public String create(ResponsavelDTO responsavelDTO) throws Exception {
         Responsavel responsavel = responsavelDTO.toReponsavel();
@@ -63,6 +80,12 @@ public class ResponsavelController {
         return "redirect:/responsaveis";
     }
 
+    /**
+     * Método para excluir um responsável
+     * @author Matheus
+     * @param {@code Integer} Id do responsável a a ser excluido
+     * @return {@code ModelAndView}
+     */
     @GetMapping("/responsaveis/{id}/delete")
     public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
@@ -80,6 +103,12 @@ public class ResponsavelController {
         return mv;
     }
 
+    /**
+     * Método para editar um responsável
+     * @author Matheus
+     * @param {@code id} do responsável, {@code ResponsavelDTO}, {@code HttpSession}
+     * @return {@code ModelAndView}
+     */
     @GetMapping("/responsaveis/{id}/edit")
     public ModelAndView edit(@PathVariable Integer id, ResponsavelDTO responsavelDTO, HttpSession session) {
 
@@ -110,6 +139,13 @@ public class ResponsavelController {
         return mv;
     }
 
+    /**
+     * Método para acessar a página de edição de um responsável
+     * @author Matheus
+     * @param {@code id} do responsável, {@code EditarResponsavelDTO}, {@code HttpSession}
+     * @throws Exception
+     * @return {@code ModelAndView}
+     */
     @PostMapping("responsaveis/{id}/update")
     public ModelAndView update(@PathVariable Integer id, EditarResponsavelDTO editarResponsavelDTO, HttpSession session) throws Exception {
 
@@ -137,6 +173,14 @@ public class ResponsavelController {
         return mv;
     }
 
+    /**
+     * Método para fazer o login
+     * @author Matheus
+     * @throws NoSuchAlgorithmException
+     * @throws ServiceExc
+     * @param {@code Responsavel}, {@code BindingResult}, {@code HttpSession}, {@code HttpServletRequest}
+     * @return String url pós login
+     */
     @PostMapping("/login")
     public String login(@Validated Responsavel responsavel, BindingResult bindingResult, HttpSession session, HttpServletRequest request) throws NoSuchAlgorithmException, ServiceExc {
         request.setAttribute("usuario", new Responsavel());
@@ -156,6 +200,12 @@ public class ResponsavelController {
         }
     }
 
+    /**
+     * Método para fazer o logout
+     * @author Matheus
+     * @param {@code HttpSession}
+     * @return String url de pós logout
+     */
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
