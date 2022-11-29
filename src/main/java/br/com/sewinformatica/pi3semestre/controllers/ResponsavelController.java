@@ -11,6 +11,7 @@ import br.com.sewinformatica.pi3semestre.repositories.ResponsavelRepository;
 import br.com.sewinformatica.pi3semestre.service.ResponsavelService;
 import br.com.sewinformatica.pi3semestre.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -63,50 +64,77 @@ public class ResponsavelController {
     }
 
     @GetMapping("/responsaveis/{id}/delete")
-    public String delete(@PathVariable Integer id) {
-        this.responsavelRepository.deleteById(id);
+    public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
-        return "redirect:/responsaveis";
+        ModelAndView mv = new ModelAndView();
+
+        if (responsavelService.usuarioTemPermissao(session)) {
+            this.responsavelRepository.deleteById(id);
+
+            mv.setViewName("redirect:/responsaveis");
+
+        } else {
+            mv.setViewName("erro/naoPermitido");
+        }
+
+        return mv;
     }
 
     @GetMapping("/responsaveis/{id}/edit")
-    public ModelAndView edit(@PathVariable Integer id, ResponsavelDTO responsavelDTO) {
-        Optional<Responsavel> optional = this.responsavelRepository.findById(id);
+    public ModelAndView edit(@PathVariable Integer id, ResponsavelDTO responsavelDTO, HttpSession session) {
 
-        if (optional.isPresent()) {
-            Responsavel responsavel = optional.get();
-            responsavelDTO.fromResponsavel(responsavel);
+        ModelAndView mv = new ModelAndView();
 
-            ModelAndView mv = new ModelAndView("responsavel/editarResponsavel");
-            mv.addObject("responsavel", responsavelDTO);
-            mv.addObject("setores", SetoresEnum.values());
-            mv.addObject("responsavelId", responsavel.getId());
+        if (responsavelService.usuarioEstaLogado(session)) {
+            Optional<Responsavel> optional = this.responsavelRepository.findById(id);
 
-            return mv;
+            if (optional.isPresent()) {
+                Responsavel responsavel = optional.get();
+                responsavelDTO.fromResponsavel(responsavel);
+
+                mv.setViewName("responsavel/editarResponsavel");
+                mv.addObject("responsavel", responsavelDTO);
+                mv.addObject("setores", SetoresEnum.values());
+                mv.addObject("responsavelId", responsavel.getId());
+
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
+
+                mv.setViewName("redirect:/responsaveis");
+            }
 
         } else {
-            System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
-
-            return new ModelAndView("redirect:/responsaveis");
+            mv.setViewName("erro/naoPermitido");
         }
+
+        return mv;
     }
 
     @PostMapping("responsaveis/{id}/update")
-    public ModelAndView update(@PathVariable Integer id, EditarResponsavelDTO editarResponsavelDTO) throws Exception {
+    public ModelAndView update(@PathVariable Integer id, EditarResponsavelDTO editarResponsavelDTO, HttpSession session) throws Exception {
 
-        Optional<Responsavel> optional = this.responsavelRepository.findById(id);
+        ModelAndView mv = new ModelAndView();
 
-        if (optional.isPresent()) {
-            Responsavel responsavel = editarResponsavelDTO.toResponsavel(optional.get());
-            responsavelService.atualizarResponsavel(responsavel);
+        if (responsavelService.usuarioEstaLogado(session)) {
+            Optional<Responsavel> optional = this.responsavelRepository.findById(id);
 
-            return new ModelAndView("redirect:/responsaveis");
+            if (optional.isPresent()) {
+                Responsavel responsavel = editarResponsavelDTO.toResponsavel(optional.get());
+                responsavelService.atualizarResponsavel(responsavel);
+
+                mv.setViewName("redirect:/responsaveis");
+
+            } else {
+                System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
+
+                mv.setViewName("redirect:/responsaveis");
+            }
 
         } else {
-            System.out.println("\n**************** NAO ENCONTRAMOS O RESPONSAVEL ****************\n");
-
-            return new ModelAndView("redirect:/responsaveis");
+            mv.setViewName("erro/naoPermitido");
         }
+
+        return mv;
     }
 
     @PostMapping("/login")
