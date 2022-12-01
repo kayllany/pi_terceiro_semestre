@@ -27,6 +27,12 @@ public class ZonaController {
     @Autowired
     private ResponsavelService responsavelService;
 
+    /**
+     * Metodo para acessar a tela de listagem de zonas
+     * @author Kevin
+     * @param session HttpSession - objeto contendo as informações da sessao aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping("/zonas")
     public ModelAndView zonas(HttpSession session) {
 
@@ -45,6 +51,12 @@ public class ZonaController {
         return mv;
     }
 
+    /**
+     * Metodo para acessar o formulario de criação de zonas
+     * @author Kevin
+     * @param session HttpSession - objeto contendo as informações da sessao aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping("/zonas/new")
     public ModelAndView newZona(HttpSession session) {
 
@@ -60,6 +72,13 @@ public class ZonaController {
         return mv;
     }
 
+    /**
+     * Metodo para criar o registro de uma zona no banco de dados
+     * @author Kevin
+     * @param zonaDTO ZonaDTO - objeto que carrega as informações da zona a ser criada para o banco de dados
+     * @param session HttpSession - objeto contendo as informações da sessao aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @PostMapping("/zonas/create")
     public ModelAndView create(ZonaDTO zonaDTO, HttpSession session) {
 
@@ -78,6 +97,13 @@ public class ZonaController {
         return mv;
     }
 
+    /**
+     * Metodo para deletar o registro de uma zona no banco de dados
+     * @author Kevin
+     * @param id Integer - chave primaria da zona a ser deletado
+     * @param session HttpSession - objeto contendo as informações da sessao aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping("/zonas/{id}/delete")
     public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
@@ -95,6 +121,14 @@ public class ZonaController {
         return mv;
     }
 
+    /**
+     * Metodo para acessar o formulario de edição de zonas
+     * @author Kevi
+     * @param id integer - chave primaria da zona a ser editada
+     * @param zonaDTO ZonaDTO - objeto contendo as informações a serem inseridas no banco de dados
+     * @param session httpsession - objeto com as informações da sessão aberta
+     * @return modelandview - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping("zonas/{id}/edit")
     public ModelAndView edit(@PathVariable Integer id, ZonaDTO zonaDTO, HttpSession session) {
 
@@ -126,6 +160,14 @@ public class ZonaController {
         return mv;
     }
 
+    /**
+     * Metodo para atualizar o registro de uma zona no banco de dados
+     * @author Kevin
+     * @param id Integer - chave primaria da zona a ser deletada
+     * @param editarZonaDTO EditarZonaDTO - objeto contendo as informações a serem inseridas no banco de dados
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @PostMapping("zonas/{id}/update")
     public ModelAndView update(@PathVariable Integer id, EditarZonaDTO editarZonaDTO, HttpSession session) {
 

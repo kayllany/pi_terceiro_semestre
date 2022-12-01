@@ -38,6 +38,13 @@ public class MovimentacaoController {
     @Autowired
     private ResponsavelService responsavelService;
 
+    /**
+     * Método para direcionar o usuario para o formulario de criação de movimentação
+     * @author Kevin
+     * @param equipamentoId Integer - id do equipamento a ser movimentado
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina de destino contendo os objetos que devem ser acessados
+     */
     @GetMapping("/movimentacoes/{equipamentoId}/new")
     public ModelAndView newMovimentacao(@PathVariable Integer equipamentoId, HttpSession session) {
 
@@ -58,6 +65,14 @@ public class MovimentacaoController {
         return mv;
     }
 
+    /**
+     * Metodo para a criação do registro de movimentação
+     * @author Kevin
+     * @param movimentacaoDTO MovimentacaoDTO - objeto que carrega as informação para o banco de dados
+     * @param id Integer - chave primaria do equipamento que esta sendo movimentado
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina de destino contendo os objetos que devem ser acessados
+     */
     @PostMapping("/movimentacoes/{id}/create")
     public ModelAndView create(MovimentacaoDTO movimentacaoDTO, @PathVariable Integer id, HttpSession session) {
 
@@ -82,6 +97,13 @@ public class MovimentacaoController {
         return mv;
     }
 
+    /**
+     * Metodo para deletar uma determinada movimentação
+     * @author Kevin
+     * @param id Integer - chave primaria da movimentação a ser excluida
+     * @param session HttpSessio - objeto contendo as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina de destino contendo os objetos que devem ser acessados
+     */
     @GetMapping("movimentacoes/{id}/delete")
     public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
@@ -100,6 +122,14 @@ public class MovimentacaoController {
         return mv;
     }
 
+    /**
+     * Metodo para acessar o formulario de edição de uma determinada movimentação
+     * @author Kevin
+     * @param id Integer - chave primaria da movimentação a ser editada
+     * @param editarMovimentacaoDTO EditarMovimentacaoDTO - objeto contendo as informações da movimentação editada
+     * @param session HttpSessio - objeto contendo as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina de destino contendo os objetos que devem ser acessados
+     */
     @GetMapping("movimentacoes/{id}/edit")
     public ModelAndView edit(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO, HttpSession session) {
 
@@ -133,6 +163,14 @@ public class MovimentacaoController {
         return mv;
     }
 
+    /**
+     * Metodo para editar o registro de uma determinada movimentação no banco de dados
+     * @author Kevin
+     * @param id Integer - chave primaria da movimentação a ser editada
+     * @param editarMovimentacaoDTO EditarMovimentacaoDTO - objeto contendo as informações da movimentação editada
+     * @param session HttpSessio - objeto contendo as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina de destino contendo os objetos que devem ser acessados
+     */
     @PostMapping("movimentacoes/{id}/update")
     public ModelAndView update(@PathVariable Integer id, EditarMovimentacaoDTO editarMovimentacaoDTO, HttpSession session) {
 

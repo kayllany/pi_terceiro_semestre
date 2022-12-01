@@ -7,6 +7,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class mainController {
 
+    /**
+     * Metodo que direciona para a tela de login
+     * @author Kevin
+     * @return ModelAndView - objeto com o direcionamento da view de login
+     */
     @GetMapping("/")
     public ModelAndView main() {
         ModelAndView mv = new ModelAndView("login");

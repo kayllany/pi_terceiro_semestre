@@ -16,6 +16,11 @@ public class EditarEquipamentoDTO {
     private String unidadeDeMedida;
     private String codigoSAP;
 
+    /**
+     * Metodo para gerar um Equipamento a partir da instancia dessa classe
+     * @author Kevin
+     * @return Equipamento
+     */
     public Equipamento toEquipamento() {
         return new Equipamento(
                 tipo = this.tipo,
@@ -26,6 +31,12 @@ public class EditarEquipamentoDTO {
         );
     }
 
+    /**
+     * Metodo para gerar um Equipamento a partir de um outro Equipamento passado como argumento
+     * @author Kevin
+     * @param equipamento  Equipamento - fonte das informações para gerar um segundo equipamento
+     * @return Equipamento
+     */
     public Equipamento toEquipamento( Equipamento equipamento) {
         equipamento.setTipo(this.tipo);
         equipamento.setNome(this.nome);
@@ -36,6 +47,11 @@ public class EditarEquipamentoDTO {
         return equipamento;
     }
 
+    /**
+     * Metodo para gerar um DTO a partir de um equipamento passado como parametro
+     * @author Kevin
+     * @param equipamento Equipamento - Objeto do qual serão extraidas as informações do DTO
+     */
     public void fromEquipamento(Equipamento equipamento) {
         this.tipo = equipamento.getTipo();
         this.nome = equipamento.getNome();

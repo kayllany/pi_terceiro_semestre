@@ -16,6 +16,11 @@ public class EquipamentoDTO {
     private String unidadeDeMedida;
     private String codigoSAP;
 
+    /**
+     * Metodo para transformar a instancia dessa classe em um objeto do tipo Equipamento
+     * @author Lucas
+     * @return Equipamento - um objeto para ser inserido na tabela de equipamentos na base de dados
+     */
     public Equipamento toEquipamento() {
         return new Equipamento(
                 tipo = this.tipo,
@@ -26,6 +31,10 @@ public class EquipamentoDTO {
         );
     }
 
+    /**
+     * Método que recebe um objeto do tipo Equipamento e passa as caracteristicas para a instancia dessa classe
+     * @param equipamento Equipamento - objeto com as informações do equipamento na base de dados
+     */
     public void fromEquipamento(Equipamento equipamento) {
         this.tipo = equipamento.getTipo();
         this.nome = equipamento.getNome();

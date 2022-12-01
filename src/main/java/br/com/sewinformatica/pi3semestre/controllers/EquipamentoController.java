@@ -40,6 +40,12 @@ public class EquipamentoController {
     @Autowired
     private ResponsavelService responsavelService;
 
+    /**
+     * Método para listar os equipamentos e acessar a tela de listagem.
+     * @author Kevin
+     * @param session HttpSession - objeto com informações da sessão aberta.
+     * @return ModelAndview - objeto com as informações a serem consultadas na respectiva tela (lista de equipamentos lista de tipos.
+     */
     @GetMapping("/equipamentos")
     public ModelAndView equipamentos(HttpSession session) {
         ModelAndView mv = new ModelAndView();
@@ -59,6 +65,13 @@ public class EquipamentoController {
         return mv;
     }
 
+    /**
+     * Método para acessar a página de detalhes de um determinado equipamento.
+     * @author Kevin
+     * @param id Integer - chave primaria do equipamento da base de dados.
+     * @param session HttpSession - objeto com informações da sessão aberta
+     * @return ModelAndView - objeto com as informações a serem consultadas na respectiva tela (equipametno) -  ou - tela de erro.
+     */
     @GetMapping("equipamentos/{id}/view")
     public ModelAndView view(@PathVariable Integer id, HttpSession session) {
         ModelAndView mv = new ModelAndView();
@@ -86,6 +99,12 @@ public class EquipamentoController {
         return mv;
     }
 
+    /**
+     * Método para acessar o formulario de criação de equipamentos
+     * @author Kevin
+     * @param session HttpSession - objeto com informações da sessão aberta
+     * @return ModelAndView - Objeto com as informações necessarias para o formulario (tipos, movimentacaoStatus)  - ou - tela de erro
+     */
     @GetMapping("equipamentos/new")
     public ModelAndView newEquipamento(HttpSession session) {
 
@@ -104,6 +123,14 @@ public class EquipamentoController {
         return mv;
     }
 
+    /**
+     * Método para criar um equipamento e registrar na base de dados
+     * @author Kevin
+     * @param equipamentoDTO EquipamentoDTO - objeto para guardar e enviar as informações do equipamento
+     * @param bindingResult BindingResult - objeto com as informações do formulario
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o redirecionamento para a pagina de listagem de equipamentos - ou - pagina de erro - ou - tela de listagem de equipamento
+     */
     @PostMapping("/equipamentos/create")
     public ModelAndView create(EquipamentoDTO equipamentoDTO, BindingResult bindingResult, HttpSession session) {
 
@@ -127,6 +154,13 @@ public class EquipamentoController {
         return mv;
     }
 
+    /**
+     * Método para deletar um determinado equipamento
+     * @author Kevin
+     * @param id Integer - chave primaria do equipamento alvo na base de dados
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o redirecionamento para a pagina de listagem de equipamento - ou - pagina de erro
+     */
     @GetMapping("equipamentos/{id}/delete")
     public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
@@ -144,6 +178,14 @@ public class EquipamentoController {
         return mv;
     }
 
+    /**
+     * Método para acessar a página de edição de equipamento
+     * @author Kevin
+     * @param id Integer - chave primaria do equipamento na base de dados
+     * @param equipamentoDTO EquipamentoDTO - objeto para armazenar as informações do objeto trazido da base de dados.
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com as informações necessárias para a pagina (equipamento, tipos, id do equipamento) - ou - tela de erro
+     */
     @GetMapping("equipamentos/{id}/edit")
     public ModelAndView edit(@PathVariable Integer id, EquipamentoDTO equipamentoDTO, HttpSession session) {
         ModelAndView mv = new ModelAndView();
@@ -174,6 +216,14 @@ public class EquipamentoController {
         return mv;
     }
 
+    /**
+     * Método para atualizar o registro do equipamento na base de dados
+     * @author Kevin
+     * @param id Integer - chave primaria do equipamento na base de dados
+     * @param editarEquipamentoDTO EditarEquipamentoDTO - objeto com as informações novas a serem inseridos na base de dados.
+     * @param session HttpSession - objeto com as informações sobre a sessão aberta
+     * @return ModelAndView - objeto com o redirecionamento para a pagina de detalhes do equipamento editado - ou - tela de listagem de equipamentos - ou - tela de erro
+     */
     @PostMapping("equipamentos/{id}/update")
     public ModelAndView update(@PathVariable Integer id, EditarEquipamentoDTO editarEquipamentoDTO, HttpSession session) {
 

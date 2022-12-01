@@ -18,6 +18,7 @@ public class Zona {
     @Column(nullable = false )
     private String descricao;
 
+
     public Zona(){};
     public Zona(String nome, String descricao) {
         this.nome = nome;

@@ -14,6 +14,11 @@ public class EditarResponsavelDTO {
     private String nome;
     private String setor;
 
+    /**
+     * Metodo para gerar um Responsavel a partir da instancia dessa classe
+     * @author Kevin
+     * @return Responsavel
+     */
     public Responsavel toReponsavel() {
         return new Responsavel(
                 usuario = this.usuario,
@@ -23,6 +28,12 @@ public class EditarResponsavelDTO {
         );
     }
 
+    /**
+     * Metodo para gerar um Responsavel a partir de um outro Responsavel passado como argumento
+     * @author Kevin
+     * @param responsavel Responsavel - fonte das informações para gerar um segundo responsavel
+     * @return Responsavel
+     */
     public Responsavel toResponsavel(Responsavel responsavel){
         responsavel.setUsuario(this.usuario);
         responsavel.setSenha(this.senha);
@@ -32,6 +43,11 @@ public class EditarResponsavelDTO {
         return responsavel;
     }
 
+    /**
+     * Metodo para gerar um DTO a partir de um responsavel passado como parametro
+     * @author Kevin
+     * @param responsavel Responsavel - Objeto do qual serão extraidas as informações do DTO
+     */
     public void fromResponsavel(Responsavel responsavel) {
         this.usuario = responsavel.getUsuario();
         this.senha = responsavel.getSenha();

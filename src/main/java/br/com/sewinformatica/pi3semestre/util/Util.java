@@ -6,6 +6,13 @@ import java.security.NoSuchAlgorithmException;
 
 public class Util {
 
+    /**
+     * Metodo para criptografar senha
+     * @author Kevin
+     * @param senha String - senha a ser criptografada
+     * @return String - senha criptografada
+     * @throws NoSuchAlgorithmException
+     */
     public static String md5(String senha) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         BigInteger hash = new BigInteger(1, messageDigest.digest(senha.getBytes()));

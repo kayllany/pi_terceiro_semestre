@@ -25,6 +25,12 @@ public class TipoController {
     @Autowired
     private ResponsavelService responsavelService;
 
+    /**
+     * Metodo para acessar a pagina de listagem de tipos
+     * @author Kevin
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping ("/tipos")
     public ModelAndView tipos(HttpSession session) {
 
@@ -43,6 +49,12 @@ public class TipoController {
         return mv;
     }
 
+    /**
+     * Metodo para acessar formulario de criação de tipo
+     * @author Kevin
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping ("/tipos/new")
     public ModelAndView newTipo(HttpSession session) {
 
@@ -58,6 +70,13 @@ public class TipoController {
         return mv;
     }
 
+    /**
+     * Metodo para criar o registro de um tipo no banco de dados
+     * @author Kevin
+     * @param tipoDTO TipoDTO - objeto contendo as informações a serem inseridas no banco de dados
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @PostMapping("/tipos/create")
     public ModelAndView create(TipoDTO tipoDTO, HttpSession session) {
 
@@ -76,6 +95,13 @@ public class TipoController {
         return mv;
     }
 
+    /**
+     * Metodo para deletar um determinado tipo no banco de dados
+     * @author Kevin
+     * @param id Integer - chave primaria do tipo a ser deletado
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping("/tipos/{id}/delete")
     public ModelAndView delete(@PathVariable Integer id, HttpSession session) {
 
@@ -93,6 +119,14 @@ public class TipoController {
         return mv;
     }
 
+    /**
+     * Metodo para acessar o formulario de edição de tipo
+     * @author Kevin
+     * @param id integer - chave primaria do tipo a ser deletado
+     * @param tipoDTO TipoDTO - objeto contendo as informações a serem inseridas no banco de dados
+     * @param session httpsession - objeto com as informações da sessão aberta
+     * @return modelandview - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @GetMapping("tipos/{id}/edit")
     public ModelAndView edit(@PathVariable Integer id, TipoDTO tipoDTO, HttpSession session) {
 
@@ -122,6 +156,14 @@ public class TipoController {
         return mv;
     }
 
+    /**
+     * Metodo para atualizar o registro de um tipo no banco de dados
+     * @author Kevin
+     * @param id Integer - chave primaria do tipo a ser deletado
+     * @param editarTipoDTO EditarTipoDTO - objeto contendo as informações a serem inseridas no banco de dados
+     * @param session HttpSession - objeto com as informações da sessão aberta
+     * @return ModelAndView - objeto com o direcionamento para a pagina a ser acessada contendo os objetos necessários
+     */
     @PostMapping("tipos/{id}/update")
     public ModelAndView update(@PathVariable Integer id, EditarTipoDTO editarTipoDTO, HttpSession session) {
 
