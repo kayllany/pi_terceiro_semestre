@@ -22,7 +22,19 @@ public class Responsavel {
     @Column(nullable = false )
     private String setor;
 
+    /**
+     * Metodo construtor padrão da classe
+     * @author Kevin
+     */
     public Responsavel(){};
+
+    /**
+     * Metodo construtor com parametros
+     * @param usuario String
+     * @param senha String
+     * @param nome String
+     * @param setor String
+     */
     public Responsavel(String usuario, String senha, String nome, String setor) {
         this.usuario = usuario;
         this.senha = senha;

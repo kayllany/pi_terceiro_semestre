@@ -34,7 +34,23 @@ public class Movimentacao {
     private Integer quantidade;
     private String obs;
 
+    /**
+     * Metodo construtor padrão da classe
+     * @author Kevin
+     */
     public Movimentacao(){};
+
+    /**
+     * Metodo construtor com parametros
+     * @author Kevin
+     * @param equipamento Equipamento
+     * @param zona Zona
+     * @param responsavel Responsavel
+     * @param dataEntrada Date
+     * @param status String
+     * @param quantidade Integer
+     * @param obs String
+     */
     public Movimentacao(Equipamento equipamento, Zona zona, Responsavel responsavel, Date dataEntrada, String status, Integer quantidade, String obs) {
         this.equipamento = equipamento;
         this.zona = zona;

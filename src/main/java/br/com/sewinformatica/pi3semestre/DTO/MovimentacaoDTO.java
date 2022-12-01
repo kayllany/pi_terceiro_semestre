@@ -23,6 +23,11 @@ public class MovimentacaoDTO {
     private Integer quantidade;
     private String obs;
 
+    /**
+     * Metodo para gerar uma Movimentacao a partir da instancia dessa classe
+     * @author Kevin
+     * @return Movimentacao
+     */
     public Movimentacao toMovimentacao() {
         return new Movimentacao (
                 equipamento = this.equipamento,
@@ -35,6 +40,11 @@ public class MovimentacaoDTO {
         );
     }
 
+    /**
+     * Metodo para gerar um DTO a partir de uma movimentacao passada como parametro
+     * @author Kevin
+     * @param movimentacao Movimentacao - Objeto do qual serão extraidas as informações do DTO
+     */
     public void fromMovimentacao(Movimentacao movimentacao) {
         this.equipamento = movimentacao.getEquipamento();
         this.zona = movimentacao.getZona();

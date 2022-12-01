@@ -19,7 +19,17 @@ public class Zona {
     private String descricao;
 
 
+    /**
+     * Metodo construtor padrão da classe
+     * @author Kevin
+     */
     public Zona(){};
+
+    /**
+     * Metodo construtor com parametro
+     * @param nome String
+     * @param descricao String
+     */
     public Zona(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;

@@ -38,9 +38,9 @@ public class EditarZonaDTO {
     }
 
     /**
-     * Metodo para gerar um DTO a partir de uma movimentacao passada como parametro
+     * Metodo para gerar um DTO a partir de uma zona passada como parametro
      * @author Kevin
-     * @param movimentacao Movimentacao - Objeto do qual serão extraidas as informações do DTO
+     * @param zona zona - Objeto do qual serão extraidas as informações do DTO
      */
     public void fromZona(Zona zona) {
         this.nome = zona.getNome();

@@ -11,6 +11,11 @@ import lombok.ToString;
 public class TipoDTO {
     private String nome;
 
+    /**
+     * Metodo para gerar um Tipo a partir da instancia dessa classe
+     * @author Ryu
+     * @return Tipo
+     */
     public Tipo toTipo() {
         return new Tipo(
                 nome = this.nome

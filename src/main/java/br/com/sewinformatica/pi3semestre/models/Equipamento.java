@@ -28,7 +28,20 @@ public class Equipamento {
     @OneToMany(mappedBy = "equipamento")
     private List<Movimentacao> movimentacoes;
 
+    /**
+     * Metodo construtor padrão da classe
+     * @author Kevin
+     */
     public Equipamento(){};
+
+    /**
+     * Metodo construtor com parametros
+     * @param tipo Tipo
+     * @param nome String
+     * @param descricao String
+     * @param unidadeDeMedida String
+     * @param codigoSAP String
+     */
     public Equipamento(Tipo tipo, String nome, String descricao, String unidadeDeMedida, String codigoSAP) {
         this.tipo = tipo;
         this.nome = nome;

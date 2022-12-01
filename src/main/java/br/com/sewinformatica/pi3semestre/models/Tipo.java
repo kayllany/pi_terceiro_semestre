@@ -16,7 +16,17 @@ public class Tipo {
     @Column(nullable = false )
     private String nome;
 
+    /**
+     * Metodo construtor padrão da classe
+     * @author Kevin
+     */
     public Tipo(){};
+
+    /**
+     * Metodo construtor com parametro
+     * @author Kevin
+     * @param nome String
+     */
     public Tipo(String nome) {
         this.nome = nome;
     }
